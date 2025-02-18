@@ -1,0 +1,5 @@
+/node_modules
+.env
+Datte-versionning.md
+ec_private.pem
+ec_public.pem

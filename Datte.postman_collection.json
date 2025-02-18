@@ -1,0 +1,979 @@
+{
+	"info": {
+		"_postman_id": "8ff18067-1795-4aa4-8420-94a490cb1dad",
+		"name": "Datte",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32005283"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get User By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJudmsyT3FMQ2NqSzNiYTNLIiwianRpIjoiMVdPRVVyc2N3QXZ2Nzl3UyIsImlhdCI6MTczODkyNTQ0NCwiZXhwIjoxNzM4OTI5MDQ0LCJyb2xlIjpbIjEyM3NXOGVSMXRaNFVTRVIiXX0.J9dJ-_PU7Rg-c7-DbVuPoQF1okOlH_1WInN4uhUnTOcHuhQ12vPt8Ozmsi1cE8aAg6nF19MzCRThHAU8KsNR2g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v0.0.1/users/nvk2OqLCcjK3ba3K",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v0.0.1",
+								"users",
+								"nvk2OqLCcjK3ba3K"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0bEhHWmNDeWd3NWZsdmFvIiwianRpIjoieVpucWFDaHFBWnBDV0U0UyIsImlhdCI6MTczODk0NTkzMywiZXhwIjoxNzM4OTQ5NTMzLCJyb2xlIjpbIjEyM3NXOGVSMXRaNFVTRVIiXX0.YucfanTQBKfWIgA8TFbfbYp26y5p77msWpUB4xiPpUf7YssvPPYC6T3NObIhrCZomAxyqs6W8I36lRUWNOGauA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v0.0.1/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v0.0.1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"admin@dmin.com\",\n  \"password\": \"admin@dmin\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v0.0.1/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v0.0.1",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modify User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJudmsyT3FMQ2NqSzNiYTNLIiwianRpIjoiMVdPRVVyc2N3QXZ2Nzl3UyIsImlhdCI6MTczODkyNTQ0NCwiZXhwIjoxNzM4OTI5MDQ0LCJyb2xlIjpbIjEyM3NXOGVSMXRaNFVTRVIiXX0.J9dJ-_PU7Rg-c7-DbVuPoQF1okOlH_1WInN4uhUnTOcHuhQ12vPt8Ozmsi1cE8aAg6nF19MzCRThHAU8KsNR2g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"emilia@clarke.com\",\n  \"password\": \"Je t'aime <333\",\n  \"firstname\": \"Emilia\",\n  \"lastname\": \"Clarke\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v0.0.1/users/nvk2OqLCcjK3ba3K",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v0.0.1",
+								"users",
+								"nvk2OqLCcjK3ba3K"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhWUhHR3RCWWc5WEhuaUFSIiwianRpIjoiemw4U2h6Q0FEUHJOVXk4bSIsImlhdCI6MTczODk0ODYxOSwiZXhwIjoxNzM4OTUyMjE5LCJyb2xlIjpbInFBNXNXOGVSMXRaNHZDOW0iLCJ0Ujl5VThpTzNwTDJxVzRlIiwid0UzclQ2eVU4aUsybE83cCJdfQ.lbAbIRSSnGjZr_zJzfLdOjPD9uMLbokwspqdY5WUkkF68DkQ8wnXOSDfzk6rtLI5fRmzphsxWs7otSRjtOcHfA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v0.0.1/users/aYHGGtBYg9XHniAR",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v0.0.1",
+								"users",
+								"aYHGGtBYg9XHniAR"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Role",
+			"item": [
+				{
+					"name": "Get Role By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJudmsyT3FMQ2NqSzNiYTNLIiwianRpIjoiMVdPRVVyc2N3QXZ2Nzl3UyIsImlhdCI6MTczODkyNTQ0NCwiZXhwIjoxNzM4OTI5MDQ0LCJyb2xlIjpbIjEyM3NXOGVSMXRaNFVTRVIiXX0.J9dJ-_PU7Rg-c7-DbVuPoQF1okOlH_1WInN4uhUnTOcHuhQ12vPt8Ozmsi1cE8aAg6nF19MzCRThHAU8KsNR2g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v0.0.1/roles/nvk2OqLCcjK3ba3K",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v0.0.1",
+								"roles",
+								"nvk2OqLCcjK3ba3K"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Roles",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJudmsyT3FMQ2NqSzNiYTNLIiwianRpIjoiMVdPRVVyc2N3QXZ2Nzl3UyIsImlhdCI6MTczODkyNTQ0NCwiZXhwIjoxNzM4OTI5MDQ0LCJyb2xlIjpbIjEyM3NXOGVSMXRaNFVTRVIiXX0.J9dJ-_PU7Rg-c7-DbVuPoQF1okOlH_1WInN4uhUnTOcHuhQ12vPt8Ozmsi1cE8aAg6nF19MzCRThHAU8KsNR2g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v0.0.1/roles",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v0.0.1",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Role",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"DEVELOPER\",\n    \"description\": \"Cette description permet de supprimer un utilisateur\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v0.0.1/roles",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v0.0.1",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modify Role",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJudmsyT3FMQ2NqSzNiYTNLIiwianRpIjoiMVdPRVVyc2N3QXZ2Nzl3UyIsImlhdCI6MTczODkyNTQ0NCwiZXhwIjoxNzM4OTI5MDQ0LCJyb2xlIjpbIjEyM3NXOGVSMXRaNFVTRVIiXX0.J9dJ-_PU7Rg-c7-DbVuPoQF1okOlH_1WInN4uhUnTOcHuhQ12vPt8Ozmsi1cE8aAg6nF19MzCRThHAU8KsNR2g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"DEVELOPER\",\n    \"description\": \"Cette description permet de supprimer un utilisateur\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v0.0.1/roles/nvk2OqLCcjK3ba3K",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v0.0.1",
+								"roles",
+								"nvk2OqLCcjK3ba3K"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Role",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJudmsyT3FMQ2NqSzNiYTNLIiwianRpIjoiMVdPRVVyc2N3QXZ2Nzl3UyIsImlhdCI6MTczODkyNTQ0NCwiZXhwIjoxNzM4OTI5MDQ0LCJyb2xlIjpbIjEyM3NXOGVSMXRaNFVTRVIiXX0.J9dJ-_PU7Rg-c7-DbVuPoQF1okOlH_1WInN4uhUnTOcHuhQ12vPt8Ozmsi1cE8aAg6nF19MzCRThHAU8KsNR2g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v0.0.1/roles/nvk2OqLCcjK3ba3K",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v0.0.1",
+								"roles",
+								"nvk2OqLCcjK3ba3K"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Permission",
+			"item": [
+				{
+					"name": "Get Permission By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJudmsyT3FMQ2NqSzNiYTNLIiwianRpIjoiMVdPRVVyc2N3QXZ2Nzl3UyIsImlhdCI6MTczODkyNTQ0NCwiZXhwIjoxNzM4OTI5MDQ0LCJyb2xlIjpbIjEyM3NXOGVSMXRaNFVTRVIiXX0.J9dJ-_PU7Rg-c7-DbVuPoQF1okOlH_1WInN4uhUnTOcHuhQ12vPt8Ozmsi1cE8aAg6nF19MzCRThHAU8KsNR2g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v0.0.1/permissions/nvk2OqLCcjK3ba3K",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v0.0.1",
+								"permissions",
+								"nvk2OqLCcjK3ba3K"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Permissions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJudmsyT3FMQ2NqSzNiYTNLIiwianRpIjoiMVdPRVVyc2N3QXZ2Nzl3UyIsImlhdCI6MTczODkyNTQ0NCwiZXhwIjoxNzM4OTI5MDQ0LCJyb2xlIjpbIjEyM3NXOGVSMXRaNFVTRVIiXX0.J9dJ-_PU7Rg-c7-DbVuPoQF1okOlH_1WInN4uhUnTOcHuhQ12vPt8Ozmsi1cE8aAg6nF19MzCRThHAU8KsNR2g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v0.0.1/permissions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v0.0.1",
+								"permissions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Permission",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"action\": \"TEST2\",\n    \"resource\": \"IDK BRO\",\n    \"description\": \"je suis en train de mettre une description\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v0.0.1/permissions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v0.0.1",
+								"permissions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modify Permission",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJudmsyT3FMQ2NqSzNiYTNLIiwianRpIjoiMVdPRVVyc2N3QXZ2Nzl3UyIsImlhdCI6MTczODkyNTQ0NCwiZXhwIjoxNzM4OTI5MDQ0LCJyb2xlIjpbIjEyM3NXOGVSMXRaNFVTRVIiXX0.J9dJ-_PU7Rg-c7-DbVuPoQF1okOlH_1WInN4uhUnTOcHuhQ12vPt8Ozmsi1cE8aAg6nF19MzCRThHAU8KsNR2g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"action\": \"TEST2\",\n    \"resource\": \"IDK BRO\",\n    \"description\": \"je suis en train de mettre une description\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v0.0.1/permissions/nvk2OqLCcjK3ba3K",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v0.0.1",
+								"permissions",
+								"nvk2OqLCcjK3ba3K"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Permission",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJudmsyT3FMQ2NqSzNiYTNLIiwianRpIjoiMVdPRVVyc2N3QXZ2Nzl3UyIsImlhdCI6MTczODkyNTQ0NCwiZXhwIjoxNzM4OTI5MDQ0LCJyb2xlIjpbIjEyM3NXOGVSMXRaNFVTRVIiXX0.J9dJ-_PU7Rg-c7-DbVuPoQF1okOlH_1WInN4uhUnTOcHuhQ12vPt8Ozmsi1cE8aAg6nF19MzCRThHAU8KsNR2g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v0.0.1/permissions/nvk2OqLCcjK3ba3K",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v0.0.1",
+								"permissions",
+								"nvk2OqLCcjK3ba3K"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "UserRole",
+			"item": [
+				{
+					"name": "Get UserRole By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJudmsyT3FMQ2NqSzNiYTNLIiwianRpIjoiMVdPRVVyc2N3QXZ2Nzl3UyIsImlhdCI6MTczODkyNTQ0NCwiZXhwIjoxNzM4OTI5MDQ0LCJyb2xlIjpbIjEyM3NXOGVSMXRaNFVTRVIiXX0.J9dJ-_PU7Rg-c7-DbVuPoQF1okOlH_1WInN4uhUnTOcHuhQ12vPt8Ozmsi1cE8aAg6nF19MzCRThHAU8KsNR2g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v0.0.1/userroles/nvk2OqLCcjK3ba3K",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v0.0.1",
+								"userroles",
+								"nvk2OqLCcjK3ba3K"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All UserRoles",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJudmsyT3FMQ2NqSzNiYTNLIiwianRpIjoiMVdPRVVyc2N3QXZ2Nzl3UyIsImlhdCI6MTczODkyNTQ0NCwiZXhwIjoxNzM4OTI5MDQ0LCJyb2xlIjpbIjEyM3NXOGVSMXRaNFVTRVIiXX0.J9dJ-_PU7Rg-c7-DbVuPoQF1okOlH_1WInN4uhUnTOcHuhQ12vPt8Ozmsi1cE8aAg6nF19MzCRThHAU8KsNR2g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v0.0.1/userroles",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v0.0.1",
+								"userroles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create UserRole",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\": \"aYHGGtBYg9XHniAR\",\n    \"role_id\": \"tR9yU8iO3pL2qW4e\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v0.0.1/userroles",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v0.0.1",
+								"userroles"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "RolePermission",
+			"item": [
+				{
+					"name": "Get RolePermission By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJudmsyT3FMQ2NqSzNiYTNLIiwianRpIjoiMVdPRVVyc2N3QXZ2Nzl3UyIsImlhdCI6MTczODkyNTQ0NCwiZXhwIjoxNzM4OTI5MDQ0LCJyb2xlIjpbIjEyM3NXOGVSMXRaNFVTRVIiXX0.J9dJ-_PU7Rg-c7-DbVuPoQF1okOlH_1WInN4uhUnTOcHuhQ12vPt8Ozmsi1cE8aAg6nF19MzCRThHAU8KsNR2g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v0.0.1/rolepermissions/nvk2OqLCcjK3ba3K",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v0.0.1",
+								"rolepermissions",
+								"nvk2OqLCcjK3ba3K"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All RolePermissions",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJudmsyT3FMQ2NqSzNiYTNLIiwianRpIjoiMVdPRVVyc2N3QXZ2Nzl3UyIsImlhdCI6MTczODkyNTQ0NCwiZXhwIjoxNzM4OTI5MDQ0LCJyb2xlIjpbIjEyM3NXOGVSMXRaNFVTRVIiXX0.J9dJ-_PU7Rg-c7-DbVuPoQF1okOlH_1WInN4uhUnTOcHuhQ12vPt8Ozmsi1cE8aAg6nF19MzCRThHAU8KsNR2g",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/v0.0.1/rolepermissions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v0.0.1",
+								"rolepermissions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create RolePermission",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"role_id\": \"aYHGGtBYg9XHniAR\",\n    \"permission_id\": \"tR9yU8iO3pL2qW4e\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v0.0.1/rolepermissions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v0.0.1",
+								"rolepermissions"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AuthToken",
+			"item": [
+				{
+					"name": "Connexion",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"emilia@clarke.com\",\r\n  \"password\": \"Je t'aime <33\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v0.0.1/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v0.0.1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deconnexion",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhWUhHR3RCWWc5WEhuaUFSIiwianRpIjoiemw4U2h6Q0FEUHJOVXk4bSIsImlhdCI6MTczODk0ODYxOSwiZXhwIjoxNzM4OTUyMjE5LCJyb2xlIjpbInFBNXNXOGVSMXRaNHZDOW0iLCJ0Ujl5VThpTzNwTDJxVzRlIiwid0UzclQ2eVU4aUsybE83cCJdfQ.lbAbIRSSnGjZr_zJzfLdOjPD9uMLbokwspqdY5WUkkF68DkQ8wnXOSDfzk6rtLI5fRmzphsxWs7otSRjtOcHfA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v0.0.1/auth/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v0.0.1",
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get token by user id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhWUhHR3RCWWc5WEhuaUFSIiwianRpIjoiemw4U2h6Q0FEUHJOVXk4bSIsImlhdCI6MTczODk0ODYxOSwiZXhwIjoxNzM4OTUyMjE5LCJyb2xlIjpbInFBNXNXOGVSMXRaNHZDOW0iLCJ0Ujl5VThpTzNwTDJxVzRlIiwid0UzclQ2eVU4aUsybE83cCJdfQ.lbAbIRSSnGjZr_zJzfLdOjPD9uMLbokwspqdY5WUkkF68DkQ8wnXOSDfzk6rtLI5fRmzphsxWs7otSRjtOcHfA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v0.0.1/auth/tokens/aYHGGtBYg9XHniAR",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v0.0.1",
+								"auth",
+								"tokens",
+								"aYHGGtBYg9XHniAR"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete token by user id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhWUhHR3RCWWc5WEhuaUFSIiwianRpIjoiemw4U2h6Q0FEUHJOVXk4bSIsImlhdCI6MTczODk0ODYxOSwiZXhwIjoxNzM4OTUyMjE5LCJyb2xlIjpbInFBNXNXOGVSMXRaNHZDOW0iLCJ0Ujl5VThpTzNwTDJxVzRlIiwid0UzclQ2eVU4aUsybE83cCJdfQ.lbAbIRSSnGjZr_zJzfLdOjPD9uMLbokwspqdY5WUkkF68DkQ8wnXOSDfzk6rtLI5fRmzphsxWs7otSRjtOcHfA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v0.0.1/auth/tokens/user/aYHGGtBYg9XHniAR",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v0.0.1",
+								"auth",
+								"tokens",
+								"user",
+								"aYHGGtBYg9XHniAR"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all tokens",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhWUhHR3RCWWc5WEhuaUFSIiwianRpIjoiemw4U2h6Q0FEUHJOVXk4bSIsImlhdCI6MTczODk0ODYxOSwiZXhwIjoxNzM4OTUyMjE5LCJyb2xlIjpbInFBNXNXOGVSMXRaNHZDOW0iLCJ0Ujl5VThpTzNwTDJxVzRlIiwid0UzclQ2eVU4aUsybE83cCJdfQ.lbAbIRSSnGjZr_zJzfLdOjPD9uMLbokwspqdY5WUkkF68DkQ8wnXOSDfzk6rtLI5fRmzphsxWs7otSRjtOcHfA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v0.0.1/auth/tokens",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v0.0.1",
+								"auth",
+								"tokens"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete token by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhWUhHR3RCWWc5WEhuaUFSIiwianRpIjoiemw4U2h6Q0FEUHJOVXk4bSIsImlhdCI6MTczODk0ODYxOSwiZXhwIjoxNzM4OTUyMjE5LCJyb2xlIjpbInFBNXNXOGVSMXRaNHZDOW0iLCJ0Ujl5VThpTzNwTDJxVzRlIiwid0UzclQ2eVU4aUsybE83cCJdfQ.lbAbIRSSnGjZr_zJzfLdOjPD9uMLbokwspqdY5WUkkF68DkQ8wnXOSDfzk6rtLI5fRmzphsxWs7otSRjtOcHfA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"emilia@clarke.com\",\r\n  \"password\": \"Je t'aime <33\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v0.0.1/auth/tokens",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v0.0.1",
+								"auth",
+								"tokens"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

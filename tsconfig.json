@@ -1,0 +1,28 @@
+{
+    "compilerOptions": {
+      "target": "es6",
+      "module": "commonjs",
+      "outDir": "./dist",
+      "rootDir": "./src",
+      "strict": true,
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "baseUrl": "./", 
+      "paths": {
+        "@core/*": ["src/cores/*"],
+        "@middlewares/*": ["src/middlewares/*"],
+        "@modules/*": ["src/modules/*"],
+        "@users/*": ["src/modules/users/*"],
+        
+        // Databases
+        "@db/*": ["src/config/db/*"]
+      },
+      "strictNullChecks": false, // Il faut le renlever plus tard, car ça dit : null = undefined
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true
+    },
+    "include": ["src/**/*"],
+    "exclude": ["node_modules"]
+  }
+  
