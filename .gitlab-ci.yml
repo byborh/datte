@@ -1,0 +1,89 @@
+image: node:20-alpine
+
+# Cache node_modules to speed up builds
+# https://docs.gitlab.com/ee/ci/yaml/index.html#cache
+cache:
+  paths:
+    - node_modules/
+
+# Configuration for production branches
+.prod_conf:
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: always
+
+# Define pipeline stages
+stages:
+    - init
+    - test
+    - build
+    - docker-build
+    - test-build
+    - deploy
+
+# Install dependencies only when necessary
+install:
+    stage: init
+    script:
+        - yarn
+    extends: .prod_conf
+    rules:
+      # Run only if package.json is modified in a merge request
+      - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+        changes:
+          - package.json
+      # Skip if node_modules already exists
+      - exists:
+          - node_modules
+        when: never
+      # Always run if package.json is present
+      - exists:
+          - package.json
+        when: always
+
+# Run linter to check code quality
+lint:
+    stage: test
+    script:
+        - yarn lint
+    extends: .prod_conf
+    rules:
+      # Run only if source files are modified in a merge request
+      - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+        changes:
+          - src/**/*
+
+# Run tests to validate code functionality
+test:
+    stage: test
+    script:
+        - yarn test
+    extends: .prod_conf
+    rules:
+      # Run only if source files are modified in a merge request
+      - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+        changes:
+          - src/**/*
+
+# Compile the application
+compile-app:
+    stage: build
+    script:
+        - yarn build
+    extends: .prod_conf
+    rules:
+      # Always run on the default branch
+      - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+        when: always
+      # Run if source files are modified in a merge request
+      - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+        changes:
+          - src/**/*
+    # Store build artifacts for future stages
+    artifacts:
+        name: "build-$CI_COMMIT_REF_NAME-$CI_COMMIT_SHORT_SHA"
+        paths:
+            - ${CI_BUILD_OUTPUT_PATH}
+        when: on_success
+        access: all
+        expire_in: 30 days

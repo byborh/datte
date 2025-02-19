@@ -3,6 +3,6 @@
 Datte-versionning.md
 ec_private.pem
 ec_public.pem
+/docker
 /dist
 yarn.lock
-checksum.sha256.gpg

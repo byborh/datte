@@ -78,6 +78,10 @@ L'aventure ne fait que commencer ! La prochaine version, **Datte-Core 1**, viend
 3. **Démarrez l'application :**
    ```bash
    npm run datte
+
+   # Ou
+
+   npm run dev
    ```
 
 4. **Accédez à l'API :**  
@@ -121,8 +125,8 @@ openssl ec -in ec_private.pem -pubout -outform PEM
 
 ## 👥 Contributeurs
 
-- **Kazakh** - Développeur Principal & Architecte & Responsable des Tests & Gestion de Projet
-- **Emmario** - Le mentor !
+- **Kazakh** - Développeur Principal & Architecte & Gestion de Projet
+- **Emmario** - Le DevSecOps et le mentor
 ---
 
 ## 📝 Licence

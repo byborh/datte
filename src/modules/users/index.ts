@@ -2,7 +2,7 @@ import express from 'express';
 import { UserController } from './controllers/UserController';
 import { UserService } from './services/UserService';
 import { UserRepositoryMySQL } from './repositories/drivers/UserRepositoryMySQL';
-import { UserRoutes } from './route/UserRoutes';
+import { UserRoutes } from './route/userRoutes';
 
 export const createUserModule = (): express.Router => {
   const userRepositoryMySQL = new UserRepositoryMySQL();
