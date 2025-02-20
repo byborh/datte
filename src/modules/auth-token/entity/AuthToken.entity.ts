@@ -14,10 +14,10 @@ export class AuthToken implements AuthTokenContract {
     @Column({ type: "varchar", length: 512 })
     token: string;
 
-    @Column({ type: "timestamp" })
+    @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
     createdAt: Date;
 
-    @Column({ type: "timestamp" })
+    @Column({ type: "timestamp", default: () => "CURRENT_TIMESTAMP", onUpdate: "CURRENT_TIMESTAMP" })
     expiresAt: Date;
 
     @OneToOne(() => User, user => user.authToken, {onDelete: "CASCADE"})

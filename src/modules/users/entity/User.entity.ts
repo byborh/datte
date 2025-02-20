@@ -18,7 +18,6 @@ export class User implements UserContract {
     pseudo?: string | null;
 
     @Column({ unique: true })
-    @Index()
     email: string;
 
     @Column()

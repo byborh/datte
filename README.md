@@ -75,14 +75,38 @@ L'aventure ne fait que commencer ! La prochaine version, **Datte-Core 1**, viend
    npm install
    ```
 
-3. **Démarrez l'application :**
+Voici la version corrigée pour prendre en compte le fait que **`make prod`** et **`make dev`** gèrent MySQL automatiquement :  
+
+---
+
+### **3. Démarrez l'application :**  
+Vous avez deux options pour lancer l'application :  
+
+- **Via npm** (nécessite une base de données MySQL déjà configurée) :  
    ```bash
    npm run datte
 
    # Ou
 
    npm run dev
-   ```
+   ```  
+   ⚠️ **Assurez-vous que votre base de données est déjà en place** avant de démarrer l’application.  
+
+- **Via Makefile** (démarre MySQL automatiquement avant l'application) :  
+   - **En mode développement** :  
+     ```bash
+     make dev
+     ```  
+     MySQL sera démarré automatiquement si nécessaire.  
+
+   - **En mode production** :  
+     ```bash
+     make prod
+     ```  
+     Cette commande s'assure que MySQL est bien lancé et configure l’environnement avant de démarrer l’application en production.  
+
+---
+
 
 4. **Accédez à l'API :**  
    Rendez-vous sur [http://localhost:3000/api/v1.0.0](http://localhost:3000/api/v1.0.0) pour explorer les endpoints.
@@ -137,7 +161,9 @@ Ce projet est sous licence **GNU GPL v3** - voir le fichier [LICENSE](./LICENSE)
 
 ## 🙏 Remerciements
 
-Merci à tous ceux qui ont/vont contribué(r) au projet Datte. Vos retours nous aident à faire évoluer le projet. 💖
+Merci à tous ceux qui ont/vont contribué(r) au projet Datte. Notamment un grand merci à ma famille qui me supporte au quotidien et à Emmario, sans lui, la prod' m'aurait pris au moins 2 semaines (et encore).
+
+Vos retours nous aident à faire évoluer le projet. 💖
 
 ---
 

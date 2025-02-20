@@ -15,7 +15,7 @@ export const AppDataSource = new DataSource({
     host: process.env.MYSQL_HOST || "localhost",
     port: Number(process.env.MYSQL_PORT) || 3306,
     username: process.env.MYSQL_USER || "root",
-    password: process.env.MYSQL_PASSWORD || "",
+    password: process.env.MYSQL_PASSWORD || "",// root
     database: process.env.MYSQL_DATABASE || "datte",
     entities: [User, Role, Permission, UserRoles, RolePermissions, AuthToken], // ADD ALL ENTITIES
     synchronize: process.env.NODE_ENV !== "production", // ATTENTION

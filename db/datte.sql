@@ -21,6 +21,9 @@ SET time_zone = "+00:00";
 -- Base de données : `datte`
 --
 
+CREATE DATABASE datte;
+USE datte;
+
 -- --------------------------------------------------------
 
 --
@@ -43,8 +46,8 @@ CREATE TABLE IF NOT EXISTS `auth_token` (
 --
 
 INSERT INTO `auth_token` (`id`, `user_id`, `token`, `createdAt`, `expiresAt`) VALUES
-('AmVLStKR6FLEp9PQ', 'WCN23fnqj1WSA4ti', 'eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJXQ04yM2ZucWoxV1NBNHRpIiwianRpIjoiQW1WTFN0S1I2RkxFcDlQUSIsImlhdCI6MTczODk0OTI0MywiZXhwIjoxNzM4OTUyODQzLCJyb2xlIjpbIjEyM3NXOGVSMXRaNFVTRVIiXX0.r1s3cgdygniEU_pifO0esk9QilAdsLDvHx8FvFH3WawzTJFRrkp5DvjMtIvilFWM6cgx2BIL19Ao5Z4mLJOGug', '2025-02-07 17:27:23', '2025-02-07 18:27:23'),
-('J80c50WnrZzsM9rm', 'Ttz6HOipLcc89syP', 'eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJUdHo2SE9pcExjYzg5c3lQIiwianRpIjoiSjgwYzUwV25yWnpzTTlybSIsImlhdCI6MTczODk0OTIwMCwiZXhwIjoxNzM4OTUyODAwLCJyb2xlIjpbIjEyM3NXOGVSMXRaNFVTRVIiXX0.dFgFWUDv7ctJXE9P_7jD0YpfuLVhi4hFqd70NSu9a5cNgHeArNO6EQtszLMd4kdpZw4rG6Wsy6WX1C66BURC7A', '2025-02-07 17:26:40', '2025-02-07 18:26:40');
+('AmVLStKR6FLEp9PQ', 'WCN23fnqj1WSA4ti', 'eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJXQ04yM2ZucWoxV1NBNHRpIiwianRpIjoiQW1WTFN0S1I2RkxFcDlQUSIsImlhdCI6MTczODk0OTI0MywiZXhwIjoxNzM4OTUyODQzLCJyb2xlIjpbIjEyM3NXOGVSMXRaNFVTRVIiXX0.r1s3cgdygniEU_pifO0esk9QilAdsLDvHx8FvFH3WawzTJFRrkp5DvjMtIvilFWM6cgx2BIL19Ao5Z4mLJOGug', 1739993931566, 1739994031297),
+('J80c50WnrZzsM9rm', 'Ttz6HOipLcc89syP', 'eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJUdHo2SE9pcExjYzg5c3lQIiwianRpIjoiSjgwYzUwV25yWnpzTTlybSIsImlhdCI6MTczODk0OTIwMCwiZXhwIjoxNzM4OTUyODAwLCJyb2xlIjpbIjEyM3NXOGVSMXRaNFVTRVIiXX0.dFgFWUDv7ctJXE9P_7jD0YpfuLVhi4hFqd70NSu9a5cNgHeArNO6EQtszLMd4kdpZw4rG6Wsy6WX1C66BURC7A', 1739993931566, 1739994031297);
 
 -- --------------------------------------------------------
 

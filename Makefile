@@ -41,21 +41,32 @@ build-dev:
 
 build: build-dev
 
-mysql:
+mysql: network
 	@echo "Starting MySQL container..."
-	@docker run --net=host --name mysql -p 3306:3306 -e MYSQL_DATABASE=${MYSQL_DATABASE} -e MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD} -d mysql:5.7
+	@docker run --name mysql -e MYSQL_DATABASE=${MYSQL_DATABASE} -e MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD} -d mysql:5.7
+	@docker network connect datte-network mysql
 
 init-mysql:
 	@echo "Initializing MySQL permissions..."
 	@docker exec -it mysql mysql -uroot -p"${MYSQL_ROOT_PASSWORD}" -e "GRANT ALL PRIVILEGES ON *.* TO '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}' WITH GRANT OPTION; FLUSH PRIVILEGES;"
 
-prod: build-prod
+prod: build-prod network mysql
 	@echo "Running production container..."
-	@docker run -it --rm -p ${PORT}:${PORT} --env-file=.env $(APP_NAME)
+	@docker run --name $(APP_NAME) -p ${PORT}:${PORT} \
+		--env-file=.env \
+		--network=datte-network \
+		-v $(APP_NAME)-logs:/app/logs \
+		-d $(APP_NAME)
+	@docker logs -f $(APP_NAME)
 
-dev: build
+dev: build network
 	@echo "Running development container..."
-	@docker run -it --rm -p ${PORT}:${PORT} --env-file=.env $(APP_NAME)-dev
+	@docker run --name $(APP_NAME) -p ${PORT}:${PORT} -it --rm --env-file=.env -d $(APP_NAME)-dev
+	@docker network connect datte-network $(APP_NAME)
+	@docker logs -f $(APP_NAME)
+
+
+#-p ${PORT}:${PORT}
 
 version:
 	@echo "Current version: $(VERSION)"
@@ -81,6 +92,8 @@ clean:
 	@echo "Stopping and removing container $(APP_NAME)..."
 	@docker container stop $(APP_NAME) || true
 	@docker container rm $(APP_NAME) || true
+	@docker container stop mysql || true
+	@docker container rm mysql || true
 
 clean-all:
 	@echo "Removing all containers related to $(APP_NAME)..."
@@ -89,3 +102,7 @@ clean-all:
 info:
 	@echo "Fetching container info..."
 	@docker inspect $(APP_NAME)
+
+network:
+	@echo "Creating network..."
+	@docker network create datte-network 2>/dev/null || true

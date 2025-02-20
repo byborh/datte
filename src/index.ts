@@ -11,6 +11,7 @@ import { createAuthTokenModule } from '@modules/auth-token';
 
 const app = express();
 const port = 3000;
+const host = '0.0.0.0';
 
 // Middleware global
 app.use(express.json());
@@ -40,7 +41,7 @@ app.get('/', (req, res) => {
 // Initialize the db before the database
 initDatabase().then(() => {
   // Run the server
-  app.listen(port, () => {
+  app.listen(port, host, () => {
     console.log(`📌 Serveur en cours d'exécution sur le port ${port}`);
   });
 }).catch ((error) => {

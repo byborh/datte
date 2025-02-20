@@ -6,3 +6,4 @@ ec_public.pem
 /docker
 /dist
 yarn.lock
+Makefile
