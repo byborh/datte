@@ -52,3 +52,4 @@ ec_private.pem
 ec_public.pem
 checksum.sha256.gpg
 checksum_info.txt
+dump.sql
