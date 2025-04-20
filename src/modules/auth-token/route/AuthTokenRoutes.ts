@@ -24,7 +24,7 @@ export const AuthTokenRoutes = (authTokenController: AuthTokenController): expre
     // Get token by user id
     router.get(
         "/tokens/user/:userId",
-        authMiddleware(["ADMIN", "MANAGER"]),
+        // authMiddleware(["ADMIN", "MANAGER"]),
         validateAttributeMiddleware("params", "userId", "userId missing or invalid in request params."),
         (req: Request, res: Response, next: NextFunction) => authTokenController.getAuthTokenByUserId(req, res, next)
     );
@@ -32,7 +32,7 @@ export const AuthTokenRoutes = (authTokenController: AuthTokenController): expre
     // Delete token by user id
     router.delete(
         "/tokens/user/:userId",
-        authMiddleware(["ADMIN", "MANAGER"]),
+        // authMiddleware(["ADMIN", "MANAGER"]),
         validateAttributeMiddleware("params", "userId", "userId missing or invalid in request params."),
         (req: Request, res: Response, next: NextFunction) => authTokenController.deleteAuthTokenByUserId(req, res, next)
     );
@@ -40,14 +40,14 @@ export const AuthTokenRoutes = (authTokenController: AuthTokenController): expre
     // Get all tokens
     router.get(
         "/tokens",
-        authMiddleware(["ADMIN"]),
+        // authMiddleware(["ADMIN"]),
         (req: Request, res: Response, next: NextFunction) => authTokenController.getAllAuthTokens(req, res, next)
     );
     
     // Delete token by id
     router.delete(
         "/tokens/:authTokenId",
-        authMiddleware(["ADMIN"]),
+        // authMiddleware(["ADMIN"]),
         validateAttributeMiddleware("params", "authTokenId", "AuthTokenId missing or invalid in request params."),
         (req: Request, res: Response, next: NextFunction) => authTokenController.deleteAuthTokenById(req, res, next)
     );

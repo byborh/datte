@@ -1,0 +1,35 @@
+# Image Location
+FROM node:20-alpine
+
+# Install dependencies and required packages
+RUN yarn global add yarn@latest &&\
+    apk add openssl bash &&\
+    rm -rf /var/cache/apk/*
+
+# Set application path
+ENV APP_PATH=/opt/datte
+
+# Create application directory and set permissions
+RUN mkdir -p ${APP_PATH} &&\
+    chown -R node:node ${APP_PATH}
+
+# Copy and configure entrypoint script
+COPY ./scripts/entrypoint.sh /usr/bin/entrypoint
+RUN chown -R root:node /usr/bin/entrypoint &&\
+    chmod +x /usr/bin/entrypoint
+
+# Set working directory and user
+WORKDIR ${APP_PATH}
+USER node
+
+# Copy package.json and install dependencies
+COPY ./package.json .
+# RUN yarn
+RUN yarn install --frozen-lockfile
+
+
+# Copy project files
+COPY . .
+
+# Define entrypoint script
+ENTRYPOINT ["entrypoint"]

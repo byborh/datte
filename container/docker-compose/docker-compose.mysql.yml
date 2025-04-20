@@ -1,0 +1,44 @@
+services:
+  back:
+    build:
+      context: .
+      dockerfile: ./container/dockerfile/Dockerfile.dev
+    environment:
+      NODE_ENV: $NODE_ENV
+      MYSQL_USER: $MYSQL_USER
+      MYSQL_PASSWORD: $MYSQL_PASSWORD
+      MYSQL_DATABASE: $MYSQL_DATABASE
+      MYSQL_HOST: mysqldb
+    depends_on:
+      mysqldb:
+        condition: service_healthy
+    networks:
+      - mysql-private-tunnel
+    ports:
+      - 3000:3000
+
+  mysqldb:
+    image: mysql:5.7
+    container_name: mysql
+    hostname: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: $MYSQL_PASSWORD
+      MYSQL_DATABASE: $MYSQL_DATABASE
+    networks:
+      - mysql-private-tunnel
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "--connect-timeout", "4"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+
+networks:
+  mysql-private-tunnel:
+    driver: bridge
+
+volumes:
+  mysql_data:
+    driver: local

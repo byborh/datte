@@ -1,26 +1,27 @@
-import { UserRoles } from "../entity/UserRoles.entity";
-import { UserRolesRepositoryMySQL } from "../repositories/drivers/UserRolesRepositoryMySQL";
+import { UserRolesAbstract } from "../entity/UserRoles.abstract";
+import { createUserRolesEntity } from "../entity/UserRoles.factory";
+import { IUserRolesRepository } from "../repositories/contract/IUserRolesRepository";
 
 export class UserRolesService {
-    private userRolesRepository: UserRolesRepositoryMySQL;
+    private userRolesRepository: IUserRolesRepository;
 
-    constructor(userRolesRepository: UserRolesRepositoryMySQL) {
+    constructor(userRolesRepository: IUserRolesRepository) {
         this.userRolesRepository = userRolesRepository;
     }
 
     // Get a userRoles by ID
-    public async getUserRolesById(user_id: string, role_id: string): Promise<UserRoles[] | null> {
+    public async getUserRolesById(user_id: string, role_id: string): Promise<UserRolesAbstract[] | null> {
         try {
             // Verify if user_id and role_id is provided
             if (!user_id ||!role_id) {
-                throw new Error("UserRoles ID is required.");
+                throw new Error("UserRolesAbstract ID is required.");
             }
 
             // Call UserRolesRepository to find a userRoles by ID
-            const userRolesEntity: UserRoles[] = await this.userRolesRepository.getUserRolesByMultipleFields(["user_id", "role_id"], [user_id, role_id]);
+            const userRolesEntity: UserRolesAbstract[] = await this.userRolesRepository.getUserRolesByMultipleFields(["user_id", "role_id"], [user_id, role_id]);
 
             // If no userRoles is found, return null
-            if (!userRolesEntity || userRolesEntity.length === 0) throw new Error("UserRoles not found.");
+            if (!userRolesEntity || userRolesEntity.length === 0) throw new Error("UserRolesAbstract not found.");
 
             // Return the userRoles
             return userRolesEntity;
@@ -31,10 +32,10 @@ export class UserRolesService {
     }
 
     // Get all userRoles
-    public async getUserRoles(): Promise<Array<UserRoles> | null> {
+    public async getUserRoles(): Promise<Array<UserRolesAbstract> | null> {
         try {
             // Call UserRolesRepository to find all userRoles
-            const userRolesEntity: UserRoles[] = await this.userRolesRepository.getUserRoles();
+            const userRolesEntity: UserRolesAbstract[] = await this.userRolesRepository.getUserRoles();
 
             // If no userRoles are found, return null
             if (!userRolesEntity) return null;
@@ -48,21 +49,23 @@ export class UserRolesService {
     }
 
     // Create userRoles
-    public async createUserRoles(userRoles: UserRoles): Promise<UserRoles | null> {
+    public async createUserRoles(userRoles: UserRolesAbstract): Promise<UserRolesAbstract | null> {
         try {
+            const userRolesEntity = await createUserRolesEntity(userRoles);
+
             // Check if the userRoles already exists based on user_id and role_id
-            const existingUserRoles: UserRoles[] | null = await this.userRolesRepository.getUserRolesByMultipleFields(["user_id", "role_id"], [userRoles.user_id, userRoles.role_id]);
-            if (existingUserRoles || existingUserRoles.length > 0) {
-                console.error("UserRoles already exists:", existingUserRoles);
-                throw new Error("UserRoles already exists.");
+            const existingUserRoles: UserRolesAbstract[] | null = await this.userRolesRepository.getUserRolesByMultipleFields(["user_id", "role_id"], [userRolesEntity.user_id, userRolesEntity.role_id]);
+            if (existingUserRoles) {
+                console.error("UserRolesAbstract already exists:", existingUserRoles);
+                throw new Error("UserRolesAbstract already exists.");
             }
 
             // Create userRoles through repository
-            const createdUserRoles: UserRoles | null = await this.userRolesRepository.createUserRoles(userRoles);
+            const createdUserRoles: UserRolesAbstract | null = await this.userRolesRepository.createUserRoles(userRolesEntity);
 
             // If userRoles creation fails, throw an error
             if (!createdUserRoles) {
-                throw new Error("UserRoles didn't create...");
+                throw new Error("UserRolesAbstract didn't create...");
             }
 
             // Return the created userRoles
@@ -72,4 +75,16 @@ export class UserRolesService {
             throw new Error("Failed to create userRoles.");
         }
     }
+
+    public async deleteUserRoles(user_id: string, role_id: string): Promise<boolean> {
+        try {
+            if (!user_id || !role_id) return false;
+    
+            return await this.userRolesRepository.deleteUserRolesByMultipleFields(["user_id", "role_id"], [user_id, role_id]);
+        } catch (error) {
+            console.error("Error deleting userRoles in UserRolesService:", error);
+            throw new Error("Failed to delete userRoles.");
+        }
+    }
+    
 }

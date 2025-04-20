@@ -1,10 +1,11 @@
-import { Role } from "@modules/roles/entity/Role.entity";
-import { User } from "@modules/users/entity/User.entity";
+import { RoleAbstract } from "@modules/roles/entity/Role.abstract";
+import {  } from "@modules/roles/entity/sql/Role.entity";
+import { UserAbstract } from "@modules/users/entity/User.abstract";
 
-// Interface of the permission
+// Interface of the user roles
 export interface UserRolesContract {
   user_id: string;
   role_id: string;
-  user: User;
-  role: Role
+  user?: UserAbstract;
+  role?: RoleAbstract
 }

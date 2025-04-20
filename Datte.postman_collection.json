@@ -25,7 +25,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/v0.0.1/users/nvk2OqLCcjK3ba3K",
+							"raw": "http://localhost:3000/api/v0.0.2/users/Ttz6HOipLcc89syP",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -33,9 +33,9 @@
 							"port": "3000",
 							"path": [
 								"api",
-								"v0.0.1",
+								"v0.0.2",
 								"users",
-								"nvk2OqLCcjK3ba3K"
+								"Ttz6HOipLcc89syP"
 							]
 						}
 					},
@@ -43,13 +43,65 @@
 				},
 				{
 					"name": "Get All Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>ID</th>\r",
+									"        <th>Email</th>\r",
+									"        <th>First Name</th>\r",
+									"        <th>Last Name</th>\r",
+									"        <th>Pseudo</th>\r",
+									"        <th>Telephone Number</th>\r",
+									"        <th>Created At</th>\r",
+									"        <th>Updated At</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each response}}\r",
+									"        <tr>\r",
+									"            <td>{{id}}</td>\r",
+									"            <td>{{email}}</td>\r",
+									"            <td>{{firstname}}</td>\r",
+									"            <td>{{lastname}}</td>\r",
+									"            <td>{{pseudo}}</td>\r",
+									"            <td>{{telnumber}}</td>\r",
+									"            <td>{{createdAt}}</td>\r",
+									"            <td>{{updatedAt}}</td>\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    return {response: pm.response.json()}\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0bEhHWmNDeWd3NWZsdmFvIiwianRpIjoieVpucWFDaHFBWnBDV0U0UyIsImlhdCI6MTczODk0NTkzMywiZXhwIjoxNzM4OTQ5NTMzLCJyb2xlIjpbIjEyM3NXOGVSMXRaNFVTRVIiXX0.YucfanTQBKfWIgA8TFbfbYp26y5p77msWpUB4xiPpUf7YssvPPYC6T3NObIhrCZomAxyqs6W8I36lRUWNOGauA",
+									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJXQ04yM2ZucWoxV1NBNHRpIiwianRpIjoiSm1BbGhZT2lHRGlDQ1o3ZSIsImlhdCI6MTczODk1OTg0NCwiZXhwIjoxNzM4OTYzNDQ0LCJyb2xlIjpbIjEyM3NXOGVSMXRaNFVTRVIiLCJxQTVzVzhlUjF0WjR2QzltIiwid0UzclQ2eVU4aUsybE83cCJdfQ.ZfVRE3foAFkLnS4NBeFbybBM4hzlVFWJIzisV4IHR0L0gtCZT2kKZvHGBMEn_7-LlNS8EZ07F9CSXVueSlH8MQ",
 									"type": "string"
 								}
 							]
@@ -57,7 +109,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/v0.0.1/users",
+							"raw": "http://localhost:3000/api/v0.0.2/users",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -65,7 +117,7 @@
 							"port": "3000",
 							"path": [
 								"api",
-								"v0.0.1",
+								"v0.0.2",
 								"users"
 							]
 						}
@@ -87,7 +139,7 @@
 							"raw": "{\n  \"email\": \"admin@dmin.com\",\n  \"password\": \"admin@dmin\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v0.0.1/users",
+							"raw": "http://localhost:3000/api/v0.0.2/users",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -95,7 +147,7 @@
 							"port": "3000",
 							"path": [
 								"api",
-								"v0.0.1",
+								"v0.0.2",
 								"users"
 							]
 						}
@@ -127,7 +179,7 @@
 							"raw": "{\n  \"email\": \"emilia@clarke.com\",\n  \"password\": \"Je t'aime <333\",\n  \"firstname\": \"Emilia\",\n  \"lastname\": \"Clarke\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v0.0.1/users/nvk2OqLCcjK3ba3K",
+							"raw": "http://localhost:3000/api/v0.0.2/users/nvk2OqLCcjK3ba3K",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -135,7 +187,7 @@
 							"port": "3000",
 							"path": [
 								"api",
-								"v0.0.1",
+								"v0.0.2",
 								"users",
 								"nvk2OqLCcjK3ba3K"
 							]
@@ -159,7 +211,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/v0.0.1/users/aYHGGtBYg9XHniAR",
+							"raw": "http://localhost:3000/api/v0.0.2/users/aYHGGtBYg9XHniAR",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -167,7 +219,7 @@
 							"port": "3000",
 							"path": [
 								"api",
-								"v0.0.1",
+								"v0.0.2",
 								"users",
 								"aYHGGtBYg9XHniAR"
 							]
@@ -196,7 +248,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/v0.0.1/roles/nvk2OqLCcjK3ba3K",
+							"raw": "http://localhost:3000/api/v0.0.2/roles/nvk2OqLCcjK3ba3K",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -204,7 +256,7 @@
 							"port": "3000",
 							"path": [
 								"api",
-								"v0.0.1",
+								"v0.0.2",
 								"roles",
 								"nvk2OqLCcjK3ba3K"
 							]
@@ -220,7 +272,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJudmsyT3FMQ2NqSzNiYTNLIiwianRpIjoiMVdPRVVyc2N3QXZ2Nzl3UyIsImlhdCI6MTczODkyNTQ0NCwiZXhwIjoxNzM4OTI5MDQ0LCJyb2xlIjpbIjEyM3NXOGVSMXRaNFVTRVIiXX0.J9dJ-_PU7Rg-c7-DbVuPoQF1okOlH_1WInN4uhUnTOcHuhQ12vPt8Ozmsi1cE8aAg6nF19MzCRThHAU8KsNR2g",
+									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJXQ04yM2ZucWoxV1NBNHRpIiwianRpIjoiSm1BbGhZT2lHRGlDQ1o3ZSIsImlhdCI6MTczODk1OTg0NCwiZXhwIjoxNzM4OTYzNDQ0LCJyb2xlIjpbIjEyM3NXOGVSMXRaNFVTRVIiLCJxQTVzVzhlUjF0WjR2QzltIiwid0UzclQ2eVU4aUsybE83cCJdfQ.ZfVRE3foAFkLnS4NBeFbybBM4hzlVFWJIzisV4IHR0L0gtCZT2kKZvHGBMEn_7-LlNS8EZ07F9CSXVueSlH8MQ",
 									"type": "string"
 								}
 							]
@@ -228,7 +280,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/v0.0.1/roles",
+							"raw": "http://localhost:3000/api/v0.0.2/roles",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -236,7 +288,7 @@
 							"port": "3000",
 							"path": [
 								"api",
-								"v0.0.1",
+								"v0.0.2",
 								"roles"
 							]
 						}
@@ -258,7 +310,7 @@
 							"raw": "{\n    \"name\": \"DEVELOPER\",\n    \"description\": \"Cette description permet de supprimer un utilisateur\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v0.0.1/roles",
+							"raw": "http://localhost:3000/api/v0.0.2/roles",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -266,7 +318,7 @@
 							"port": "3000",
 							"path": [
 								"api",
-								"v0.0.1",
+								"v0.0.2",
 								"roles"
 							]
 						}
@@ -298,7 +350,7 @@
 							"raw": "{\n    \"name\": \"DEVELOPER\",\n    \"description\": \"Cette description permet de supprimer un utilisateur\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v0.0.1/roles/nvk2OqLCcjK3ba3K",
+							"raw": "http://localhost:3000/api/v0.0.2/roles/nvk2OqLCcjK3ba3K",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -306,7 +358,7 @@
 							"port": "3000",
 							"path": [
 								"api",
-								"v0.0.1",
+								"v0.0.2",
 								"roles",
 								"nvk2OqLCcjK3ba3K"
 							]
@@ -330,7 +382,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/v0.0.1/roles/nvk2OqLCcjK3ba3K",
+							"raw": "http://localhost:3000/api/v0.0.2/roles/nvk2OqLCcjK3ba3K",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -338,179 +390,8 @@
 							"port": "3000",
 							"path": [
 								"api",
-								"v0.0.1",
+								"v0.0.2",
 								"roles",
-								"nvk2OqLCcjK3ba3K"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Permission",
-			"item": [
-				{
-					"name": "Get Permission By ID",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJudmsyT3FMQ2NqSzNiYTNLIiwianRpIjoiMVdPRVVyc2N3QXZ2Nzl3UyIsImlhdCI6MTczODkyNTQ0NCwiZXhwIjoxNzM4OTI5MDQ0LCJyb2xlIjpbIjEyM3NXOGVSMXRaNFVTRVIiXX0.J9dJ-_PU7Rg-c7-DbVuPoQF1okOlH_1WInN4uhUnTOcHuhQ12vPt8Ozmsi1cE8aAg6nF19MzCRThHAU8KsNR2g",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/api/v0.0.1/permissions/nvk2OqLCcjK3ba3K",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"v0.0.1",
-								"permissions",
-								"nvk2OqLCcjK3ba3K"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get All Permissions",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJudmsyT3FMQ2NqSzNiYTNLIiwianRpIjoiMVdPRVVyc2N3QXZ2Nzl3UyIsImlhdCI6MTczODkyNTQ0NCwiZXhwIjoxNzM4OTI5MDQ0LCJyb2xlIjpbIjEyM3NXOGVSMXRaNFVTRVIiXX0.J9dJ-_PU7Rg-c7-DbVuPoQF1okOlH_1WInN4uhUnTOcHuhQ12vPt8Ozmsi1cE8aAg6nF19MzCRThHAU8KsNR2g",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/api/v0.0.1/permissions",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"v0.0.1",
-								"permissions"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create Permission",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"action\": \"TEST2\",\n    \"resource\": \"IDK BRO\",\n    \"description\": \"je suis en train de mettre une description\"\n}"
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/v0.0.1/permissions",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"v0.0.1",
-								"permissions"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Modify Permission",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJudmsyT3FMQ2NqSzNiYTNLIiwianRpIjoiMVdPRVVyc2N3QXZ2Nzl3UyIsImlhdCI6MTczODkyNTQ0NCwiZXhwIjoxNzM4OTI5MDQ0LCJyb2xlIjpbIjEyM3NXOGVSMXRaNFVTRVIiXX0.J9dJ-_PU7Rg-c7-DbVuPoQF1okOlH_1WInN4uhUnTOcHuhQ12vPt8Ozmsi1cE8aAg6nF19MzCRThHAU8KsNR2g",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PATCH",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"action\": \"TEST2\",\n    \"resource\": \"IDK BRO\",\n    \"description\": \"je suis en train de mettre une description\"\n}"
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/v0.0.1/permissions/nvk2OqLCcjK3ba3K",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"v0.0.1",
-								"permissions",
-								"nvk2OqLCcjK3ba3K"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Permission",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJudmsyT3FMQ2NqSzNiYTNLIiwianRpIjoiMVdPRVVyc2N3QXZ2Nzl3UyIsImlhdCI6MTczODkyNTQ0NCwiZXhwIjoxNzM4OTI5MDQ0LCJyb2xlIjpbIjEyM3NXOGVSMXRaNFVTRVIiXX0.J9dJ-_PU7Rg-c7-DbVuPoQF1okOlH_1WInN4uhUnTOcHuhQ12vPt8Ozmsi1cE8aAg6nF19MzCRThHAU8KsNR2g",
-									"type": "string"
-								}
-							]
-						},
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/api/v0.0.1/permissions/nvk2OqLCcjK3ba3K",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"v0.0.1",
-								"permissions",
 								"nvk2OqLCcjK3ba3K"
 							]
 						}
@@ -538,7 +419,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/v0.0.1/userroles/nvk2OqLCcjK3ba3K",
+							"raw": "http://localhost:3000/api/v0.0.2/userroles/nvk2OqLCcjK3ba3K",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -546,7 +427,7 @@
 							"port": "3000",
 							"path": [
 								"api",
-								"v0.0.1",
+								"v0.0.2",
 								"userroles",
 								"nvk2OqLCcjK3ba3K"
 							]
@@ -570,7 +451,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/api/v0.0.1/userroles",
+							"raw": "http://localhost:3000/api/v0.0.2/userroles",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -578,7 +459,7 @@
 							"port": "3000",
 							"path": [
 								"api",
-								"v0.0.1",
+								"v0.0.2",
 								"userroles"
 							]
 						}
@@ -600,7 +481,7 @@
 							"raw": "{\n    \"user_id\": \"aYHGGtBYg9XHniAR\",\n    \"role_id\": \"tR9yU8iO3pL2qW4e\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v0.0.1/userroles",
+							"raw": "http://localhost:3000/api/v0.0.2/userroles",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -608,106 +489,8 @@
 							"port": "3000",
 							"path": [
 								"api",
-								"v0.0.1",
+								"v0.0.2",
 								"userroles"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "RolePermission",
-			"item": [
-				{
-					"name": "Get RolePermission By ID",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJudmsyT3FMQ2NqSzNiYTNLIiwianRpIjoiMVdPRVVyc2N3QXZ2Nzl3UyIsImlhdCI6MTczODkyNTQ0NCwiZXhwIjoxNzM4OTI5MDQ0LCJyb2xlIjpbIjEyM3NXOGVSMXRaNFVTRVIiXX0.J9dJ-_PU7Rg-c7-DbVuPoQF1okOlH_1WInN4uhUnTOcHuhQ12vPt8Ozmsi1cE8aAg6nF19MzCRThHAU8KsNR2g",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/api/v0.0.1/rolepermissions/nvk2OqLCcjK3ba3K",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"v0.0.1",
-								"rolepermissions",
-								"nvk2OqLCcjK3ba3K"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get All RolePermissions",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJudmsyT3FMQ2NqSzNiYTNLIiwianRpIjoiMVdPRVVyc2N3QXZ2Nzl3UyIsImlhdCI6MTczODkyNTQ0NCwiZXhwIjoxNzM4OTI5MDQ0LCJyb2xlIjpbIjEyM3NXOGVSMXRaNFVTRVIiXX0.J9dJ-_PU7Rg-c7-DbVuPoQF1okOlH_1WInN4uhUnTOcHuhQ12vPt8Ozmsi1cE8aAg6nF19MzCRThHAU8KsNR2g",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/api/v0.0.1/rolepermissions",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"v0.0.1",
-								"rolepermissions"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create RolePermission",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"role_id\": \"aYHGGtBYg9XHniAR\",\n    \"permission_id\": \"tR9yU8iO3pL2qW4e\"\n}"
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/v0.0.1/rolepermissions",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"v0.0.1",
-								"rolepermissions"
 							]
 						}
 					},
@@ -735,7 +518,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"email\": \"emilia@clarke.com\",\r\n  \"password\": \"Je t'aime <33\"\r\n}",
+							"raw": "{\r\n  \"email\": \"admin@dmin.com\",\r\n  \"password\": \"admin@dmin\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -743,7 +526,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v0.0.1/auth/login",
+							"raw": "http://localhost:3000/api/v0.0.2/auth/login",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -751,7 +534,7 @@
 							"port": "3000",
 							"path": [
 								"api",
-								"v0.0.1",
+								"v0.0.2",
 								"auth",
 								"login"
 							]
@@ -784,7 +567,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v0.0.1/auth/logout",
+							"raw": "http://localhost:3000/api/v0.0.2/auth/logout",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -792,7 +575,7 @@
 							"port": "3000",
 							"path": [
 								"api",
-								"v0.0.1",
+								"v0.0.2",
 								"auth",
 								"logout"
 							]
@@ -808,7 +591,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhWUhHR3RCWWc5WEhuaUFSIiwianRpIjoiemw4U2h6Q0FEUHJOVXk4bSIsImlhdCI6MTczODk0ODYxOSwiZXhwIjoxNzM4OTUyMjE5LCJyb2xlIjpbInFBNXNXOGVSMXRaNHZDOW0iLCJ0Ujl5VThpTzNwTDJxVzRlIiwid0UzclQ2eVU4aUsybE83cCJdfQ.lbAbIRSSnGjZr_zJzfLdOjPD9uMLbokwspqdY5WUkkF68DkQ8wnXOSDfzk6rtLI5fRmzphsxWs7otSRjtOcHfA",
+									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJXQ04yM2ZucWoxV1NBNHRpIiwianRpIjoiSm1BbGhZT2lHRGlDQ1o3ZSIsImlhdCI6MTczODk1OTg0NCwiZXhwIjoxNzM4OTYzNDQ0LCJyb2xlIjpbIjEyM3NXOGVSMXRaNFVTRVIiLCJxQTVzVzhlUjF0WjR2QzltIiwid0UzclQ2eVU4aUsybE83cCJdfQ.ZfVRE3foAFkLnS4NBeFbybBM4hzlVFWJIzisV4IHR0L0gtCZT2kKZvHGBMEn_7-LlNS8EZ07F9CSXVueSlH8MQ",
 									"type": "string"
 								}
 							]
@@ -825,7 +608,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v0.0.1/auth/tokens/aYHGGtBYg9XHniAR",
+							"raw": "http://localhost:3000/api/v0.0.2/auth/tokens/aYHGGtBYg9XHniAR",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -833,7 +616,7 @@
 							"port": "3000",
 							"path": [
 								"api",
-								"v0.0.1",
+								"v0.0.2",
 								"auth",
 								"tokens",
 								"aYHGGtBYg9XHniAR"
@@ -867,7 +650,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v0.0.1/auth/tokens/user/aYHGGtBYg9XHniAR",
+							"raw": "http://localhost:3000/api/v0.0.2/auth/tokens/user/aYHGGtBYg9XHniAR",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -875,7 +658,7 @@
 							"port": "3000",
 							"path": [
 								"api",
-								"v0.0.1",
+								"v0.0.2",
 								"auth",
 								"tokens",
 								"user",
@@ -896,7 +679,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhWUhHR3RCWWc5WEhuaUFSIiwianRpIjoiemw4U2h6Q0FEUHJOVXk4bSIsImlhdCI6MTczODk0ODYxOSwiZXhwIjoxNzM4OTUyMjE5LCJyb2xlIjpbInFBNXNXOGVSMXRaNHZDOW0iLCJ0Ujl5VThpTzNwTDJxVzRlIiwid0UzclQ2eVU4aUsybE83cCJdfQ.lbAbIRSSnGjZr_zJzfLdOjPD9uMLbokwspqdY5WUkkF68DkQ8wnXOSDfzk6rtLI5fRmzphsxWs7otSRjtOcHfA",
+									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJXQ04yM2ZucWoxV1NBNHRpIiwianRpIjoiSm1BbGhZT2lHRGlDQ1o3ZSIsImlhdCI6MTczODk1OTg0NCwiZXhwIjoxNzM4OTYzNDQ0LCJyb2xlIjpbIjEyM3NXOGVSMXRaNFVTRVIiLCJxQTVzVzhlUjF0WjR2QzltIiwid0UzclQ2eVU4aUsybE83cCJdfQ.ZfVRE3foAFkLnS4NBeFbybBM4hzlVFWJIzisV4IHR0L0gtCZT2kKZvHGBMEn_7-LlNS8EZ07F9CSXVueSlH8MQ",
 									"type": "string"
 								}
 							]
@@ -913,7 +696,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v0.0.1/auth/tokens",
+							"raw": "http://localhost:3000/api/v0.0.2/auth/tokens",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -921,7 +704,7 @@
 							"port": "3000",
 							"path": [
 								"api",
-								"v0.0.1",
+								"v0.0.2",
 								"auth",
 								"tokens"
 							]
@@ -957,7 +740,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/v0.0.1/auth/tokens",
+							"raw": "http://localhost:3000/api/v0.0.2/auth/tokens",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -965,9 +748,227 @@
 							"port": "3000",
 							"path": [
 								"api",
-								"v0.0.1",
+								"v0.0.2",
 								"auth",
 								"tokens"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ChatIA",
+			"item": [
+				{
+					"name": "Send a req to IA",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJXQ04yM2ZucWoxV1NBNHRpIiwianRpIjoiSjl3NEVmcDk1YW05dGFFMCIsImlhdCI6MTczOTIxMDM0NSwiZXhwIjoxNzM5MjEzOTQ1LCJyb2xlIjpbIjEyM3NXOGVSMXRaNFVTRVIiLCJxQTVzVzhlUjF0WjR2QzltIiwid0UzclQ2eVU4aUsybE83cCJdfQ.C71-Mcy0fybBcXwkOfJrCRo-EXvAUm4bPHj1EBxHS-c78mToQwGDs5QZt01VrPZivpNmiaydMflLHuS2txM5XA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"requestContent\": \"combien de lettre 'e' dans le mot 'after work' ? donnes moi un chiffre\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v0.0.2/chatai",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v0.0.2",
+								"chatai"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Chat AI's",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJXQ04yM2ZucWoxV1NBNHRpIiwianRpIjoiSjl3NEVmcDk1YW05dGFFMCIsImlhdCI6MTczOTIxMDM0NSwiZXhwIjoxNzM5MjEzOTQ1LCJyb2xlIjpbIjEyM3NXOGVSMXRaNFVTRVIiLCJxQTVzVzhlUjF0WjR2QzltIiwid0UzclQ2eVU4aUsybE83cCJdfQ.C71-Mcy0fybBcXwkOfJrCRo-EXvAUm4bPHj1EBxHS-c78mToQwGDs5QZt01VrPZivpNmiaydMflLHuS2txM5XA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v0.0.2/chatai",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v0.0.2",
+								"chatai"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Chat AI By Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJXQ04yM2ZucWoxV1NBNHRpIiwianRpIjoiSjl3NEVmcDk1YW05dGFFMCIsImlhdCI6MTczOTIxMDM0NSwiZXhwIjoxNzM5MjEzOTQ1LCJyb2xlIjpbIjEyM3NXOGVSMXRaNFVTRVIiLCJxQTVzVzhlUjF0WjR2QzltIiwid0UzclQ2eVU4aUsybE83cCJdfQ.C71-Mcy0fybBcXwkOfJrCRo-EXvAUm4bPHj1EBxHS-c78mToQwGDs5QZt01VrPZivpNmiaydMflLHuS2txM5XA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v0.0.2/chatai/6WqCNdasmoOaicUq",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v0.0.2",
+								"chatai",
+								"6WqCNdasmoOaicUq"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Chat AI's By User Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJXQ04yM2ZucWoxV1NBNHRpIiwianRpIjoiSjl3NEVmcDk1YW05dGFFMCIsImlhdCI6MTczOTIxMDM0NSwiZXhwIjoxNzM5MjEzOTQ1LCJyb2xlIjpbIjEyM3NXOGVSMXRaNFVTRVIiLCJxQTVzVzhlUjF0WjR2QzltIiwid0UzclQ2eVU4aUsybE83cCJdfQ.C71-Mcy0fybBcXwkOfJrCRo-EXvAUm4bPHj1EBxHS-c78mToQwGDs5QZt01VrPZivpNmiaydMflLHuS2txM5XA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v0.0.2/chatai/user/WCN23fnqj1WSA4ti",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v0.0.2",
+								"chatai",
+								"user",
+								"WCN23fnqj1WSA4ti"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Chat AI By Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJXQ04yM2ZucWoxV1NBNHRpIiwianRpIjoiSjl3NEVmcDk1YW05dGFFMCIsImlhdCI6MTczOTIxMDM0NSwiZXhwIjoxNzM5MjEzOTQ1LCJyb2xlIjpbIjEyM3NXOGVSMXRaNFVTRVIiLCJxQTVzVzhlUjF0WjR2QzltIiwid0UzclQ2eVU4aUsybE83cCJdfQ.C71-Mcy0fybBcXwkOfJrCRo-EXvAUm4bPHj1EBxHS-c78mToQwGDs5QZt01VrPZivpNmiaydMflLHuS2txM5XA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/v0.0.2/chatai/6WqCNdasmoOaicUq",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v0.0.2",
+								"chatai",
+								"6WqCNdasmoOaicUq"
 							]
 						}
 					},

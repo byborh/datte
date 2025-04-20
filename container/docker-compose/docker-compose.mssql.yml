@@ -1,0 +1,41 @@
+services:
+  back:
+    build:
+      context: .
+      dockerfile: ./container/dockerfile/Dockerfile.dev
+    environment:
+      NODE_ENV: $NODE_ENV
+    depends_on:
+      mssqldb:
+        condition: service_healthy
+    networks:
+      - mssqldb-private-tunnel
+    ports:
+      - 3000:3000
+
+  mssqldb:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: mssqldb
+    hostname: mssqldb
+    restart: always
+    environment:
+      SA_PASSWORD: ${MSSQL_PASSWORD}
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: ${MSSQL_PID}
+    networks:
+      - mssqldb-private-tunnel
+    volumes:
+      - mssql_data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-U", "sa", "-P", "${MSSQL_PASSWORD}", "-Q", "SELECT 1"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+
+networks:
+  mssqldb-private-tunnel:
+    driver: bridge
+
+volumes:
+  mssql_data:
+    driver: local

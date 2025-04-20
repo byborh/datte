@@ -24,7 +24,7 @@ Pour offrir une gestion complète, voici quelques endpoints théoriques qui pour
 1. **Connexion / Authentification :**
    - **POST /auth/login**  
      - **But :** Valider les identifiants de l’utilisateur et générer un JWT.
-     - **Action :** Vérifier les credentials via l’entité `User`, récupérer les rôles/permissions, générer les tokens et enregistrer la session dans la table dédiée et/ou dans Redis.
+     - **Action :** Vérifier les credentials via l’entité `User`, récupérer les rôles, générer les tokens et enregistrer la session dans la table dédiée et/ou dans Redis.
 
 2. **Révocation / Déconnexion :**
    - **POST /auth/logout**  
@@ -49,14 +49,14 @@ Pour offrir une gestion complète, voici quelques endpoints théoriques qui pour
 1. **Login :**
    - Le client envoie ses identifiants à **POST /auth/login**.
    - Le service d’authentification valide les identifiants via l’entité `User`.
-   - Les rôles et permissions sont récupérés.
+   - Les rôles sont récupérés.
    - Un payload est construit (incluant `sub` pour l’identifiant de l’utilisateur, les rôles, etc.).
    - Le JWT est signé avec la clé privée (extrait d’un JWK, en utilisant RS256 par exemple) et a une durée de vie définie.
    - Le JWT est renvoyé au client.
 
 2. **Accès aux endpoints protégés :**
    - Chaque requête sur un endpoint protégé passe par un middleware qui décode le JWT.
-   - Les claims du token (userId, rôles, permissions) sont utilisés pour autoriser ou refuser l’accès aux ressources.
+   - Les claims du token (userId, rôles) sont utilisés pour autoriser ou refuser l’accès aux ressources.
 
 3. **Révocation :**
    - En cas de déconnexion, le token est marqué comme révoqué via **POST /auth/logout**.

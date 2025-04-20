@@ -1,24 +1,31 @@
-import { IdGenerator } from "@core/idGenerator";
-import {User} from "../entity/User.entity";
 import { UserDTO } from "../dto/UserDTO";
 import { UserMapper } from "../mapper/UserMapper";
-import {UserRepositoryMySQL} from "../repositories/drivers/UserRepositoryMySQL";
-import {PasswordManager} from "@core/cryptography/PasswordManager";
-import _ from "lodash";
-import { AuthToken } from "@modules/auth-token/entity/AuthToken.entity";
+import { PasswordManager } from "@core/cryptography/PasswordManager";
 import { CreateRoleAndTokenForUser } from "@core/auth/createRoleAndTokenForUser";
-import { UserRolesRepositoryMySQL } from "@modules/user-roles/repositories/drivers/UserRolesRepositoryMySQL";
-import { AuthTokenRepositoryMySQL } from "@modules/auth-token/repositories/drivers/AuthTokenRepositoryMySQL";
-import { RoleRepositoryMySQL } from "@modules/roles/repositories/drivers/RoleRepositoryMySQL";
+import { UserRolesRepositorySQL } from "@modules/user-roles/repositories/drivers/UserRolesRepositorySQL";
+import { AuthTokenRepositorySQL } from "@modules/auth-token/repositories/drivers/AuthTokenRepositorySQL";
+import { RoleRepositorySQL } from "@modules/roles/repositories/drivers/RoleRepositorySQL";
 import { CreateToken } from "@core/auth/createToken";
+import { getDatabase } from "@db/DatabaseClient";
+import { IUserRepository } from "../repositories/contract/IUserRepository";
+import { IRoleRepository } from "@modules/roles/repositories/contract/IRoleRepository";
+import { getRepository } from "@core/db/databaseGuards";
+import { RoleRepositoryRedis } from "@modules/roles/repositories/drivers/RoleRepostoryRedis";
+import { UserRolesRepositoryRedis } from "@modules/user-roles/repositories/drivers/UserRolesRepositoryRedis";
+import { IUserRolesRepository } from "@modules/user-roles/repositories/contract/IUserRolesRepository";
+import { IAuthTokenRepository } from "@modules/auth-token/repositories/contract/IAuthTokenRepository";
+import { AuthTokenRepositoryRedis } from "@modules/auth-token/repositories/drivers/AuthTokenRepositoryRedis";
+import { UserAbstract } from "../entity/User.abstract";
+import { AuthTokenAbstract } from "@modules/auth-token/entity/AuthToken.abstract";
+import { createUserEntity } from "../entity/User.factory";
+import { RoleRepositoryMongo } from "@modules/roles/repositories/drivers/RoleRepositoryMongo";
+import { UserRolesRepositoryMongo } from "@modules/user-roles/repositories/drivers/UserRolesRepositoryMongo";
+import { AuthTokenRepositoryMongo } from "@modules/auth-token/repositories/drivers/AuthTokenRepositoryMongo";
+import _ from "lodash";
 
 
 export class UserService {
-    private userRepository: UserRepositoryMySQL;
-
-    constructor(userRepository: UserRepositoryMySQL) {
-        this.userRepository = userRepository;
-    }
+    constructor(private userRepository: IUserRepository) {}
 
     // Get a user by ID
     public async getUserById(userId: string): Promise<UserDTO | null> {
@@ -29,7 +36,7 @@ export class UserService {
             }
 
             // Call UserRepository to find a user by ID
-            const userEntity: User = await this.userRepository.findUserById(userId);
+            const userEntity: UserAbstract = await this.userRepository.findUserById(userId);
 
             // If no user is found, return null
             if (!userEntity) {
@@ -51,12 +58,10 @@ export class UserService {
     public async getUserByEmail(email: string): Promise<UserDTO | null> {
         try {
             // Verify if email is provided
-            if (!email) {
-                throw new Error("Email is required.");
-            }
+            if (!email) throw new Error("Email is required.");
 
             // Call UserRepository to find a user by email
-            const userEntity: User = await this.userRepository.findUserByEmail(email);
+            const userEntity: UserAbstract = await this.userRepository.findUserByEmail(email);
 
             // If no user is found, return null
             if (!userEntity) {
@@ -78,7 +83,7 @@ export class UserService {
     public async getUsers(): Promise<Array<UserDTO> | null> {
         try {
             // Call UserRepository to find all users
-            const usersEntity: User[] = await this.userRepository.getAllUsers();
+            const usersEntity: UserAbstract[] = await this.userRepository.getAllUsers();
 
             // If no users are found, return null
             if (!usersEntity) return null;
@@ -92,10 +97,13 @@ export class UserService {
     }
     
     // Create user
-    public async createUser(user: User): Promise<UserDTO | null> {
+    public async createUser(user: UserAbstract): Promise<UserDTO | null> {
         try {
+            // Factory to create a correct type of user entity
+            const userEntity = await createUserEntity(user);
+
             // Verify if user exists
-            const localUser: UserDTO | null = await this.userRepository.findUserByEmail(user.getEmail());
+            const localUser: UserAbstract | null = await this.userRepository.findUserByEmail(userEntity.email);
             if (localUser) {
                 console.error("User already exists:", localUser);
                 throw new Error("User already exists.");
@@ -108,31 +116,37 @@ export class UserService {
             const salt: string = passwordManager.generateSalt();
 
             // Creation of hashed password
-            const hashedPassword: string = passwordManager.hashPassword(user.getPassword(), salt);
+            const hashedPassword: string = passwordManager.hashPassword(userEntity.password, salt);
 
             // Verification of password
-            const isValid: boolean = passwordManager.verifyPassword(user.getPassword(), salt, hashedPassword);
+            // const isPasswordValid: boolean = passwordManager.verifyPassword(userEntity.password, salt, hashedPassword); // IL N'EST PAS UTILISE ???
 
             // Assign hashed password to user
-            user.setPassword(hashedPassword);
-            user.setSalt(salt);
+            userEntity.setPassword(hashedPassword);
+            userEntity.setSalt(salt);
 
             // Create user from repository
-            const createdUser: User | null = await this.userRepository.createUser(user);
+            const createdUser: UserAbstract | null = await this.userRepository.createUser(userEntity);
 
             // User didn't created
             if (!createdUser) throw new Error("User didn't created...")
 
-            // Dependencies :
-            const roleRepository = new RoleRepositoryMySQL();
-            const userRolesRepository = new UserRolesRepositoryMySQL();
-            const authTokenRepository = new AuthTokenRepositoryMySQL();
+            // Initialize the Database
+            const myDB = await getDatabase();
 
-            const createToken = CreateToken.getInstance(authTokenRepository);            
+            // Initialize the repository
+            // Role repository
+            const roleRepository = getRepository(myDB, RoleRepositorySQL, RoleRepositoryRedis, RoleRepositoryMongo) as IRoleRepository;
+            // UserRoles repository
+            const userRolesRepository = getRepository(myDB, UserRolesRepositorySQL, UserRolesRepositoryRedis, UserRolesRepositoryMongo) as IUserRolesRepository;
+            // AuthToken repositoryé&
+            const authTokenRepository = getRepository(myDB, AuthTokenRepositorySQL, AuthTokenRepositoryRedis, AuthTokenRepositoryMongo) as IAuthTokenRepository;
+
+            const createToken = CreateToken.getInstance(authTokenRepository);
 
             // Attribute USER role
             const createRoleAndTokenForUser = CreateRoleAndTokenForUser.getInstance(roleRepository, userRolesRepository, createToken);
-            const authToken: AuthToken | null = await createRoleAndTokenForUser.createRoleAndTokenForUser(createdUser.getId());
+            const authToken: AuthTokenAbstract | null = await createRoleAndTokenForUser.createRoleAndTokenForUser(createdUser.getId());
 
             if(!authToken) throw new Error("Attribution of role or token didn't created...");
 
@@ -146,82 +160,89 @@ export class UserService {
     }
 
     // Modify user
-    public async modifyUser(userId: string, data: Partial<User>): Promise<UserDTO | null> {
+    public async modifyUser(userId: string, user: Partial<UserAbstract>): Promise<UserDTO | null> {
         try {
-            // Vérification de l'existence de l'utilisateur
+            // Factory to create a correct type of user entity
+            const userEntity = await createUserEntity(user);
+
+            // Verify if user exists
             const existingUserDTO: UserDTO | null = await this.getUserById(userId);
             if (!existingUserDTO) {
                 throw new Error("User not found.");
             }
     
-            // Mapping du DTO vers l'entité
-            const existingUser: User = await UserMapper.toEntity(existingUserDTO);
+            // Mapp the DTO to the entity
+            const existingUser: UserAbstract = await UserMapper.toEntity(existingUserDTO);
+
+            // Factory to create a correct type of user entity
+            const existingUserEntity = await createUserEntity(existingUser);
     
-            // Variable pour suivre les modifications
+            // Variable to track changes
             let hasChanges: boolean = false;
     
-            // Comparaison des champs et mise à jour si nécessaire
-            if (data.email && data.email !== existingUser.getEmail()) {
-                existingUser.setEmail(data.email);
+            // Compare fields and update if necessary
+            if (userEntity.email && userEntity.email !== existingUserEntity.email) {
+                existingUserEntity.setEmail(userEntity.email);
                 hasChanges = true;
             }
     
-            if (data.firstname && data.firstname !== existingUser.getFirstname()) {
-                existingUser.setFirstname(data.firstname);
+            if (userEntity.firstname && userEntity.firstname !== existingUserEntity.firstname) {
+                existingUserEntity.setFirstname(userEntity.firstname);
                 hasChanges = true;
             }
     
-            if (data.lastname && data.lastname !== existingUser.getLastname()) {
-                existingUser.setLastname(data.lastname);
+            if (userEntity.lastname && userEntity.lastname !== existingUserEntity.lastname) {
+                existingUserEntity.setLastname(userEntity.lastname);
                 hasChanges = true;
             }
     
-            if (data.pseudo && data.pseudo !== existingUser.getPseudo()) {
-                existingUser.setPseudo(data.pseudo);
+            if (userEntity.pseudo && userEntity.pseudo !== existingUserEntity.pseudo) {
+                existingUserEntity.setPseudo(userEntity.pseudo);
                 hasChanges = true;
             }
     
-            if (data.telnumber && data.telnumber !== existingUser.getTelnumber()) {
-                existingUser.setTelnumber(data.telnumber);
+            if (userEntity.telnumber && userEntity.telnumber !== existingUserEntity.telnumber) {
+                existingUserEntity.setTelnumber(userEntity.telnumber);
                 hasChanges = true;
             }
     
-            // Vérification du mot de passe (changer uniquement s'il est modifié)
-            if (data.password) {
+            // Verify password
+            if (userEntity.password) {
                 const passwordManager = PasswordManager.getInstance();
                 const isPasswordValid: boolean = passwordManager.verifyPassword(
-                    data.password,
-                    existingUser.getSalt(),
-                    existingUser.getPassword()
+                    userEntity.password,
+                    existingUserEntity.salt,
+                    existingUserEntity.password
                 );
     
-                // Si le mot de passe est différent
+                // If password is different
                 if (!isPasswordValid) {
                     const newSalt = passwordManager.generateSalt();
-                    const hashedPassword = passwordManager.hashPassword(data.password, newSalt);
-                    existingUser.setSalt(newSalt);
-                    existingUser.setPassword(hashedPassword);
+                    const hashedPassword = passwordManager.hashPassword(userEntity.password, newSalt);
+                    existingUserEntity.setSalt(newSalt);
+                    existingUserEntity.setPassword(hashedPassword);
                     hasChanges = true;
                 }
             }
     
-            // Si aucune modification n'est détectée, ne rien faire
+            // If no changes are detected, do nothing
             if (!hasChanges) {
                 throw new Error("No changes detected.");
             }
     
             // Mise à jour de la date de modification
-            existingUser.setUpdatedAt(new Date());
+            // Update the updatedAt field
+            existingUserEntity.setUpdatedAt(new Date());
     
-            // Mise à jour dans la base de données
-            const updatedUser: User | null = await this.userRepository.modifyUser(existingUser);
+            // Update the user in DB
+            const updatedUser: UserAbstract | null = await this.userRepository.modifyUser(existingUserEntity);
     
-            // Si l'utilisateur n'a pas été mis à jour, retourner null
+            // If user didn't updated, return null
             if (!updatedUser) {
                 throw new Error("User not updated.");
             }
     
-            // Retourner le DTO de l'utilisateur mis à jour sans données sensibles
+            // Return the updated user without sensitive userEntity
             return UserMapper.toDTO(updatedUser);
         } catch (error) {
             console.error("Error modifying user in UserService:", error);

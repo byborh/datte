@@ -1,27 +1,28 @@
-import { Role } from "../entity/Role.entity";
-import { RoleRepositoryMySQL } from "../repositories/drivers/RoleRepositoryMySQL";
+import { createRoleEntity } from "../entity/Role.factory";
+import { IRoleRepository } from "../repositories/contract/IRoleRepository";
+import { RoleAbstract } from "@modules/roles/entity/Role.abstract";
 
 export class RoleService {
-    private roleRepository: RoleRepositoryMySQL;
+    private roleRepository: IRoleRepository;
 
-    constructor(roleRepository: RoleRepositoryMySQL) {
+    constructor(roleRepository: IRoleRepository) {
         this.roleRepository = roleRepository;
     }
 
     // Get a role by ID
-    public async getRoleById(roleId: string): Promise<Role | null> {
+    public async getRoleById(roleId: string): Promise<RoleAbstract | null> {
         try {
             // Verify if roleId is provided
             if (!roleId) {
-                throw new Error("Role ID is required.");
+                throw new Error("RoleAbstract ID is required.");
             }
 
             // Call RoleRepository to find a role by ID
-            const roleEntity: Role = await this.roleRepository.getRoleById(roleId);
+            const roleEntity: RoleAbstract = await this.roleRepository.getRoleById(roleId);
 
             // If no role is found, return null
             if (!roleEntity) {
-                throw new Error("Role not found.");
+                throw new Error("RoleAbstract not found.");
             }
 
             // Return the role
@@ -33,10 +34,10 @@ export class RoleService {
     }
 
     // Get all roles
-    public async getRoles(): Promise<Array<Role> | null> {
+    public async getRoles(): Promise<Array<RoleAbstract> | null> {
         try {
             // Call RoleRepository to find all roles
-            const rolesEntity: Role[] = await this.roleRepository.getRoles();
+            const rolesEntity: RoleAbstract[] = await this.roleRepository.getRoles();
 
             // If no roles are found, return null
             if (!rolesEntity) return null;
@@ -50,17 +51,19 @@ export class RoleService {
     }
 
     // Create role
-    public async createRole(role: Role): Promise<Role | null> {
+    public async createRole(role: RoleAbstract): Promise<RoleAbstract | null> {
         try {
+            const roleEntity = await createRoleEntity(role);
+
             // Check if the role already exists based on name and resource
-            const existingRole: Role | null = await this.roleRepository.getRoleByName(role.getName());
+            const existingRole: RoleAbstract | null = await this.roleRepository.getRoleByName(roleEntity.getName());
             if (existingRole) {
                 console.error("Role already exists:", existingRole);
                 throw new Error("Role already exists.");
             }
 
             // Create role through repository
-            const createdRole: Role | null = await this.roleRepository.createRole(role);
+            const createdRole: RoleAbstract | null = await this.roleRepository.createRole(roleEntity);
 
             // If role creation fails, throw an error
             if (!createdRole) {
@@ -76,24 +79,26 @@ export class RoleService {
     }
 
     // Modify role
-    public async modifyRole(roleId: string, data: Partial<Role>): Promise<Role | null> {
+    public async modifyRole(roleId: string, role: Partial<RoleAbstract>): Promise<RoleAbstract | null> {
         try {
+            const roleEntity = await createRoleEntity(role);
+
             // Verify if role exists
-            const existingRole: Role | null = await this.getRoleById(roleId);
+            const existingRole: RoleAbstract | null = await this.getRoleById(roleId);
             if (!existingRole) {
-                throw new Error("Role not found.");
+                throw new Error("RoleAbstract not found.");
             }
 
             let hasChanges: boolean = false;
 
-            // Update data in entity
-            if (data.name && data.name !== existingRole.getName()) {
-                existingRole.setName(data.name);
+            // Update role in entity
+            if (roleEntity.name && roleEntity.name !== existingRole.getName()) {
+                existingRole.setName(roleEntity.name);
                 hasChanges = true;
             }
 
-            if (data.description && data.description !== existingRole.getDescription()) {
-                existingRole.setDescription(data.description);
+            if (roleEntity.description && roleEntity.description !== existingRole.getDescription()) {
+                existingRole.setDescription(roleEntity.description);
                 hasChanges = true;
             }
 
@@ -103,7 +108,7 @@ export class RoleService {
             }
 
             // Update role in the database
-            const updatedRole: Role | null = await this.roleRepository.modifyRole(existingRole);
+            const updatedRole: RoleAbstract | null = await this.roleRepository.modifyRole(existingRole);
 
             if (!updatedRole) return null;
 
@@ -120,13 +125,13 @@ export class RoleService {
         try {
             // Verify if roleId is provided
             if (!roleId) {
-                throw new Error("Role ID is required.");
+                throw new Error("RoleAbstract ID is required.");
             }
 
             // Find the role by ID
-            const role: Role | null = await this.getRoleById(roleId);
+            const role: RoleAbstract | null = await this.getRoleById(roleId);
             if (!role) {
-                console.error("Role not found:", roleId);
+                console.error("RoleAbstract not found:", roleId);
                 return false;
             }
 

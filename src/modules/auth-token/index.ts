@@ -1,21 +1,31 @@
 import express from 'express';
 import { AuthTokenController } from './controllers/AuthTokenController';
 import { AuthTokenService } from './services/AuthTokenService';
-import { AuthTokenRepositoryMySQL } from './repositories/drivers/AuthTokenRepositoryMySQL';
 import { AuthTokenRoutes } from './route/AuthTokenRoutes';
-import { UserRepositoryMySQL } from '@modules/users/repositories/drivers/UserRepositoryMySQL';
-import { UserRolesRepositoryMySQL } from '@modules/user-roles/repositories/drivers/UserRolesRepositoryMySQL';
+import { UserRepositorySQL } from '@modules/users/repositories/drivers/UserRepositorySQL';
+import { getDatabase } from '@db/DatabaseClient';
+import { UserRolesRepositorySQL } from '@modules/user-roles/repositories/drivers/UserRolesRepositorySQL'
+import { getRepository } from '@core/db/databaseGuards';
+import { AuthTokenRepositorySQL } from './repositories/drivers/AuthTokenRepositorySQL';
+import { AuthTokenRepositoryRedis } from './repositories/drivers/AuthTokenRepositoryRedis';
+import { IAuthTokenRepository } from './repositories/contract/IAuthTokenRepository';
+import { UserRepositoryRedis } from '@modules/users/repositories/drivers/UserRepositoryRedis';
+import { IUserRepository } from '@modules/users/repositories/contract/IUserRepository';
+import { UserRolesRepositoryRedis } from '@modules/user-roles/repositories/drivers/UserRolesRepositoryRedis';
+import { IUserRolesRepository } from '@modules/user-roles/repositories/contract/IUserRolesRepository';
+import { AuthTokenRepositoryMongo } from './repositories/drivers/AuthTokenRepositoryMongo';
+import { UserRepositoryMongo } from '@modules/users/repositories/drivers/UserRepositoryMongo';
+import { UserRolesRepositoryMongo } from '@modules/user-roles/repositories/drivers/UserRolesRepositoryMongo';
 
-export const createAuthTokenModule = (): express.Router => {
-  const authTokenRepositoryMySQL = new AuthTokenRepositoryMySQL();
+export const createAuthTokenModule = async (): Promise<express.Router> => {
+  const myDB = await getDatabase();
 
-  // User / User-Role repositories in AuthToken module
-  const userRepositoryMySQL = new UserRepositoryMySQL();
-  const userRolesRepositoryMySQL = new UserRolesRepositoryMySQL();
+  const authTokenRepository = getRepository(myDB, AuthTokenRepositorySQL, AuthTokenRepositoryRedis, AuthTokenRepositoryMongo) as IAuthTokenRepository;
+  const userRepository = getRepository(myDB, UserRepositorySQL, UserRepositoryRedis, UserRepositoryMongo) as IUserRepository;
+  const userRolesRepository = getRepository(myDB, UserRolesRepositorySQL, UserRolesRepositoryRedis, UserRolesRepositoryMongo) as IUserRolesRepository;
 
-  const authTokenService = new AuthTokenService(authTokenRepositoryMySQL, userRepositoryMySQL, userRolesRepositoryMySQL);
+  const authTokenService = new AuthTokenService(authTokenRepository, userRepository, userRolesRepository);
   const authTokenController = new AuthTokenController(authTokenService);
 
-  // Le contrôleur sera injecté dans les routes
   return AuthTokenRoutes(authTokenController);
 };

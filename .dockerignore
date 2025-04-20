@@ -1,9 +1,47 @@
+# /node_modules
+# .env
+# Datte-versionning.md
+# ec_private.pem
+# ec_public.pem
+# /docker
+# /dist
+# yarn.lock
+# Makefile
+
+
+
+# Dependencies
 /node_modules
-.env
-Datte-versionning.md
+yarn.lock
+
+# Environment and sensitive files
+# .env
 ec_private.pem
 ec_public.pem
-/docker
+
+# Build and distribution files
 /dist
-yarn.lock
+/docker
+
+# Project-specific files
+Datte-versionning.md
 Makefile
+
+# Version control
+.git/
+.gitignore
+
+# Logs and temporary files
+*.log
+
+# Editor and IDE files
+.idea/
+.vscode/
+
+# Coverage reports
+/coverage
+
+# Docker-specific files
+.dockerignore
+Dockerfile.dev
+Dockerfile.prod

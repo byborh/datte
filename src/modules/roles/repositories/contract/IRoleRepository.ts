@@ -1,10 +1,11 @@
-import { Role } from "@modules/roles/entity/Role.entity";
+import { RoleAbstract } from "@modules/roles/entity/Role.abstract";
 
 export interface IRoleRepository {
-    getRoleByField(field: string, value: string): Promise<Role | null>;
-    getRoleById(roleId: string): Promise<Role | null>;
-    getRoles(): Promise<Role[] | null>;
-    createRole(role: Role): Promise<Role | null>;
-    modifyRole(role: Role): Promise<Role | null>;
+    getRoleByField(field: string, value: string): Promise<RoleAbstract | null>;
+    getRoleById(roleId: string): Promise<RoleAbstract | null>;
+    getRoleByName(name: string): Promise<RoleAbstract | null>;
+    getRoles(): Promise<RoleAbstract[] | null>;
+    createRole(role: RoleAbstract): Promise<RoleAbstract | null>;
+    modifyRole(role: RoleAbstract): Promise<RoleAbstract | null>;
     deleteRole(roleId: string): Promise<boolean>;
 }

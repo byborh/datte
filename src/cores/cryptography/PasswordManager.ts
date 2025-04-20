@@ -1,4 +1,4 @@
-import { pbkdf2Sync } from 'crypto';
+import { pbkdf2Sync, randomBytes } from 'crypto';
 import { IdGenerator } from '../idGenerator';
 
 // Gère les mots de passe
@@ -24,10 +24,10 @@ export class PasswordManager {
         return hash.toString('hex');
     }
 
-    public generateSalt(): string {
-        const idGenerator = IdGenerator.getInstance();
-        return idGenerator.generateId(16);
-    }
+    public generateSalt(length: number = 16): string {
+        const saltBytes = randomBytes(length);
+        return saltBytes.toString('hex');
+      }
 
     public verifyPassword(password: string, salt: string, hash: string): boolean {
         const hashedPassword = this.hashPassword(password, salt);

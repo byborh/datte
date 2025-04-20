@@ -1,0 +1,38 @@
+services:
+  back:
+    build:
+      context: .
+      dockerfile: ./container/dockerfile/Dockerfile.dev
+    environment:
+      NODE_ENV: $NODE_ENV
+      MONGODB_URL: ${MONGODB_URL}
+      MONGODB_DATABASE: ${MONGODB_DATABASE}
+    depends_on:
+      mongodb:
+        condition: service_started
+    networks:
+      - mongo-private-tunnel
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+
+  mongodb:
+    image: mongo:6.0
+    container_name: mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: ${MONGODB_DATABASE}
+    networks:
+      - mongo-private-tunnel
+    volumes:
+      - mongo_data:/data/db
+    # ports:
+    #   - "27017:27017"
+
+networks:
+  mongo-private-tunnel:
+    driver: bridge
+
+volumes:
+  mongo_data:
+    driver: local

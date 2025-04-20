@@ -1,0 +1,44 @@
+services:
+  back:
+    build:
+      context: .
+      dockerfile: ./container/dockerfile/Dockerfile.dev
+    environment:
+      NODE_ENV: $NODE_ENV
+      REDIS_URL: ${REDIS_URL}
+      REDIS_HOST: redis
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - redis-private-tunnel
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+
+  redis:
+    image: redis:6.2-alpine
+    container_name: redis
+    hostname: redis
+    restart: always
+    command: redis-server --save 20 1 --loglevel warning --requirepass ${REDIS_PASSWORD} --cluster-enabled no
+    networks:
+      - redis-private-tunnel
+    volumes:
+      - redis_data:/data
+    # ports:
+    #   - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "-h", "127.0.0.1", "ping"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+
+networks:
+  redis-private-tunnel:
+    driver: bridge
+
+volumes:
+  redis_data:
+    driver: local

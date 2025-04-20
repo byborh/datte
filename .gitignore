@@ -1,8 +1,54 @@
+# /node_modules
+# .env
+# Datte-versionning.md
+# ec_private.pem
+# ec_public.pem
+
+
+# Dependencies
 /node_modules
+/.npm
+/.cache
+
+# Environment files
 .env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Logs
+*.log
+logs/
+
+# Build and distribution files
+/dist
+/build
+*.tsbuildinfo
+
+# Editor and IDE files
+.idea/
+.vscode/
+*.suo
+*.user
+*.userosscache
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Test and coverage files
+/coverage
+.nyc_output
+
+# Project-specific files
 Datte-versionning.md
 ec_private.pem
 ec_public.pem
-/dist
-yarn.lock
 checksum.sha256.gpg
+checksum_info.txt

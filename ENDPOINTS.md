@@ -28,23 +28,7 @@ Voici la liste des endpoints de votre projet Datte, regroupée par ressource :
 
 ---
 
-### **4. Permissions**  
-- **GET** `/:id` — Obtenir une permission par ID (ADMIN, MANAGER)  
-- **GET** `/` — Obtenir toutes les permissions (ADMIN, MANAGER)  
-- **POST** `/` — Créer une permission (ADMIN)  
-- **PATCH** `/:id` — Modifier une permission (ADMIN)  
-- **DELETE** `/:id` — Supprimer une permission (ADMIN)  
-
----
-
-### **5. Associations Rôles-Permissions (RolePermissions)**  
-- **GET** `/:role_id/:permission_id` — Obtenir une permission spécifique d’un rôle (ADMIN)  
-- **GET** `/` — Obtenir toutes les associations rôle-permission (ADMIN)  
-- **POST** `/` — Créer une association rôle-permission (ADMIN)  
-
----
-
-### **6. Associations Utilisateurs-Rôles (UserRoles)**  
+### **4. Associations Utilisateurs-Rôles (UserRoles)**  
 - **GET** `/:user_id/:role_id` — Obtenir un rôle spécifique d’un utilisateur (ADMIN, MANAGER)  
 - **GET** `/` — Obtenir toutes les associations utilisateur-rôle (ADMIN, MANAGER)  
 - **POST** `/` — Créer une association utilisateur-rôle (ADMIN, MANAGER)  

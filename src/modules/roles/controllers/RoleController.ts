@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { RoleService } from "../services/RoleService";
-import { Role } from "../entity/Role.entity";
+import { RoleSQLEntity } from "../entity/sql/Role.entity";
 import { IdGenerator } from "@core/idGenerator";
 
 export class RoleController {
@@ -56,10 +56,10 @@ export class RoleController {
             }
 
             const idGenerator = IdGenerator.getInstance();
-            const roleId: string = idGenerator.generateId(16);
+            const roleId: string = idGenerator.generateId();
 
             // Create new role instance
-            const role = new Role(roleId, name, description,);
+            const role = new RoleSQLEntity({id: roleId, name: name, description: description});
 
             // Create role using RoleService
             const createdRole = await this.roleService.createRole(role);

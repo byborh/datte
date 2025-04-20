@@ -1,0 +1,49 @@
+version: "3.8"
+
+services:
+  back:
+    build:
+      context: .
+      dockerfile: ./container/dockerfile/Dockerfile.dev
+    environment:
+      NODE_ENV: $NODE_ENV
+      MARIADB_USER: $MARIADB_USER
+      MARIADB_PASSWORD: $MARIADB_PASSWORD
+      MARIADB_DATABASE: $MARIADB_DATABASE
+      MARIADB_HOST: mariadb
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    networks:
+      - mariadb-private-tunnel
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+
+  mariadb:
+    image: mariadb:10.6
+    container_name: mariadb
+    hostname: mariadb
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: $MARIADB_ROOT_PASSWORD
+      MARIADB_DATABASE: $MARIADB_DATABASE
+      MARIADB_USER: $MARIADB_USER
+      MARIADB_PASSWORD: $MARIADB_PASSWORD
+    networks:
+      - mariadb-private-tunnel
+    volumes:
+      - mariadb_data:/var/lib/mariadb
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "--connect-timeout", "4"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+
+networks:
+  mariadb-private-tunnel:
+    driver: bridge
+
+volumes:
+  mariadb_data:
+    driver: local

@@ -27,7 +27,7 @@ function main () {
     if [ "$NODE_ENV" = "development" ]; then
         yarn datte  # Run the development script
     else
-        yarn prod   # Run the production script
+        yarn prod || yarn datte   # Run the production script
     fi
 }
 

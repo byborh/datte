@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { IdGenerator } from "@core/idGenerator";
 import { UserRolesService } from "../services/UserRolesService";
-import { UserRoles } from "../entity/UserRoles.entity";
+import { UserRolesAbstract } from "../entity/UserRoles.abstract";
 
 export class UserRolesController {
     private userRolesService: UserRolesService;
@@ -14,7 +13,7 @@ export class UserRolesController {
     public async getUserRolesById(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             // Retrieve userRoles by ID using UserRolesService
-            const userRoles: UserRoles[] = await this.userRolesService.getUserRolesById(req.params.user_id, req.params.role_id);
+            const userRoles: UserRolesAbstract[] = await this.userRolesService.getUserRolesById(req.params.user_id, req.params.role_id);
             
             // If no userRoles is found, return 404
             if (!userRoles || userRoles.length === 0) {
@@ -60,7 +59,7 @@ export class UserRolesController {
             }
 
             // Create new userRoles instance
-            const userRoles = new UserRoles(user_id, role_id);
+            const userRoles: UserRolesAbstract = { user_id, role_id } as UserRolesAbstract;
 
             // Create userRoles using UserRolesService
             const createdUserRoles = await this.userRolesService.createUserRoles(userRoles);
@@ -77,4 +76,30 @@ export class UserRolesController {
             next(error);
         }
     }
+
+    // Delete a userRoles
+    public async deleteUserRoles(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const { user_id, role_id } = req.params;
+    
+            // Vérification des paramètres
+            if (!user_id || !role_id) {
+                res.status(400).json({ error: "user_id and role_id are required." });
+                return;
+            }
+    
+            // Suppression dans le service
+            const isDeleted = await this.userRolesService.deleteUserRoles(user_id, role_id);
+    
+            if (!isDeleted) {
+                res.status(400).json({ error: "UserRoles could not be deleted." });
+                return;
+            }
+    
+            res.status(200).json({ message: "UserRoles deleted successfully." });
+        } catch (error) {
+            next(error);
+        }
+    }
+    
 }

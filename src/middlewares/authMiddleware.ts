@@ -1,9 +1,22 @@
-import jwt from 'jsonwebtoken';
 import { Request, Response, NextFunction } from 'express';
-import { AppDataSource } from '@db/AppDataSource';
+import { getDatabase } from '@db/DatabaseClient';
+import { IUserRepository } from '@modules/users/repositories/contract/IUserRepository';
+import { UserRepositoryRedis } from '@modules/users/repositories/drivers/UserRepositoryRedis';
+import { UserRepositorySQL } from '@modules/users/repositories/drivers/UserRepositorySQL';
+import { getRepository } from '@core/db/databaseGuards';
+import { IUserRolesRepository } from '@modules/user-roles/repositories/contract/IUserRolesRepository';
+import { UserRolesRepositorySQL } from '@modules/user-roles/repositories/drivers/UserRolesRepositorySQL'
+import { UserRolesRepositoryRedis } from '@modules/user-roles/repositories/drivers/UserRolesRepositoryRedis';
+import { UserRolesAbstract } from '@modules/user-roles/entity/UserRoles.abstract';
+import jwt from 'jsonwebtoken';
 import fs from 'fs';
 import path from 'path';
-import { User } from '@modules/users/entity/User.entity';
+import { RoleRepositorySQL } from '@modules/roles/repositories/drivers/RoleRepositorySQL';
+import { RoleRepositoryRedis } from '@modules/roles/repositories/drivers/RoleRepostoryRedis';
+import { IRoleRepository } from '@modules/roles/repositories/contract/IRoleRepository';
+import { UserRepositoryMongo } from '@modules/users/repositories/drivers/UserRepositoryMongo';
+import { UserRolesRepositoryMongo } from '@modules/user-roles/repositories/drivers/UserRolesRepositoryMongo';
+import { RoleRepositoryMongo } from '@modules/roles/repositories/drivers/RoleRepositoryMongo';
 
 const publicKeyPath = path.join(__dirname, '../../ec_public.pem');
 const publicKey = fs.readFileSync(publicKeyPath, 'utf8');
@@ -47,21 +60,41 @@ export const authMiddleware = (requiredRoles: string[] = []) => {
                 return;
             }
 
+            // Initialize database
+            const myDB = await getDatabase();
+            const userRepository = getRepository(myDB, UserRepositorySQL, UserRepositoryRedis, UserRepositoryMongo) as IUserRepository;
+            const userRolesRepository = getRepository(myDB, UserRolesRepositorySQL, UserRolesRepositoryRedis, UserRolesRepositoryMongo) as IUserRolesRepository;
+
             // Verify if user exists
-            const userRepository = AppDataSource.getRepository(User);
-            const user = await userRepository.findOne({
-                where: { id: decoded.sub },
-                relations: ['userRoles', 'userRoles.role'], // Fetch user roles
-            });
+            const user = await userRepository.findUserById(decoded.sub);
 
             if (!user) {
                 res.status(404).json({ message: 'User not found.' });
                 return;
             }
 
-            const userRoles: string[] = user.userRoles.map((userRole) => userRole.role.name);
+            // Verify if user has a role(s)
+            const userRoles: UserRolesAbstract[] = await userRolesRepository.getUserRolesByMultipleFields(["user_id"], [decoded.sub]); // Or use : user.id
+            
+            if (!userRoles || userRoles.length === 0) {
+                res.status(403).json({ message: "Access denied. User does not have a role: GUEST" });
+                return;
+            }
 
-            if (requiredRoles.length > 0 && !requiredRoles.some((role) => userRoles.includes(role))) {
+            const roleRepository = await getRepository(myDB, RoleRepositorySQL, RoleRepositoryRedis, RoleRepositoryMongo) as IRoleRepository;
+
+            const userRolesTable: string[] = await Promise.all(
+                userRoles.map(async (userRole) => {
+                    if (!userRole.role_id) {
+                        throw new Error("Role ID is missing in userRole");
+                    }
+                    const roleEntity = await roleRepository.getRoleById(userRole.role_id);
+                    return roleEntity.name;
+                })
+            );
+
+
+            if (requiredRoles.length > 0 && !requiredRoles.some((role) => userRolesTable.includes(role))) {
                 res.status(403).json({ message: "Access denied. Insufficient permissions." });
                 return;
             }
@@ -69,10 +102,9 @@ export const authMiddleware = (requiredRoles: string[] = []) => {
             // Attach user data to the request
             (req as any).user = {
                 id: user.id,
-                roles: userRoles,
+                roles: userRolesTable,
                 tokenId: decoded.jti,
             };
-
 
             next();
         } catch (error) {

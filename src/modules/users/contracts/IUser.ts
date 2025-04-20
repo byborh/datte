@@ -1,3 +1,5 @@
+import { UserDTO } from "../dto/UserDTO";
+
 // Interface of the user
 export interface UserContract {
     id: string;
@@ -10,4 +12,6 @@ export interface UserContract {
     telnumber?: string;
     createdAt: Date;
     updatedAt: Date;
+
+    toDto(): UserDTO;
 }
